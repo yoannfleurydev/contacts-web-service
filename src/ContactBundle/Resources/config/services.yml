@@ -1,0 +1,10 @@
+services:
+    kernel.listener.exception:
+        class: ContactBundle\Listener\ExceptionListener
+        arguments: ["@logger"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
+    contact.service.contact:
+        class: ContactBundle\Service\ContactService
+        arguments: ["@logger", "@doctrine.orm.entity_manager"]
