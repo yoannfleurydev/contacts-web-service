@@ -2,9 +2,9 @@
 /**
  * File for the contact entity. This entity represents the person and is
  * connected to multiple phones, dates, emails etc.
- * 
+ *
  * PHP version 7.1
- * 
+ *
  * @category Contact
  * @package  ContactBundle\Entity
  * @author   Yoann Fleury <yoann.fleury@yahoo.com>
@@ -21,7 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="contact")
  * @ORM\Entity(repositoryClass="ContactBundle\Repository\ContactRepository")
- * 
+ *
  * @category Contact
  * @package  ContactBundle\Entity
  * @author   Yoann Fleury <yoann.fleury@yahoo.com>
@@ -32,7 +32,7 @@ class Contact
 {
     /**
      * The identifier of the contact.
-     * 
+     *
      * @var int The identifier of the contact.
      *
      * @ORM\Column(name="id",type="integer")
@@ -43,7 +43,7 @@ class Contact
 
     /**
      * The first name of the contact.
-     * 
+     *
      * @var string The first name of the contact.
      *
      * @ORM\Column(name="firstName", type="string", length=255)
@@ -52,7 +52,7 @@ class Contact
 
     /**
      * The last name of the contact.
-     * 
+     *
      * @var string The last name of the contact.
      *
      * @ORM\Column(name="lastName", type="string", length=255)
@@ -61,7 +61,7 @@ class Contact
 
     /**
      * The company of the contact.
-     * 
+     *
      * @var string The company of the contact.
      *
      * @ORM\Column(name="company", type="string", length=255, nullable=true)
@@ -70,7 +70,7 @@ class Contact
 
     /**
      * The URL to the website of the contact.
-     * 
+     *
      * @var string The URL of the website of the contact.
      *
      * @ORM\Column(name="website", type="string", length=255, nullable=true)
@@ -79,7 +79,7 @@ class Contact
 
     /**
      * The note made by the user, for the contact.
-     * 
+     *
      * @var string The note made by the user, for the contact.
      *
      * @ORM\Column(name="note", type="text", nullable=true)
@@ -90,7 +90,7 @@ class Contact
      * The phones of the contact.
      *
      * @var Phone[]
-     * 
+     *
      * @ORM\OneToMany(targetEntity="Phone", mappedBy="_contact")
      */
     private $_phones;
@@ -223,5 +223,14 @@ class Contact
     public function getNote()
     {
         return $this->_note;
+    }
+
+    /**
+     * Add phone to the current contact.
+     *
+     * @return Contact The current contact.
+     */
+    public function addPhone(Phone $phone) {
+        $this->_phones[] = $phone;
     }
 }

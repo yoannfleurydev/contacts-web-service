@@ -1,72 +1,58 @@
 <?php
 /**
- * File for the phone entity. This entity represents the phone number using
- * a number and a type.
- * 
+ * File for the phone DTO. This DTO represents the phone number using a number
+ * and a type.
+ *
  * PHP version 7.1
- * 
- * @category Contact
- * @package  ContactBundle\Entity
+ *
+ * @category Phone
+ * @package  ContactBundle\DTO
  * @author   Yoann Fleury <yoann.fleury@yahoo.com>
  * @license  MIT License
  * @link     /contacts
  */
 
-namespace ContactBundle\Entity;
+namespace ContactBundle\DTO;
 
-use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Type;
 
 /**
  * Phone
  *
- * @ORM\Table(name="phone")
- * @ORM\Entity(repositoryClass="ContactBundle\Repository\PhoneRepository")
- * 
- * @category Contact
- * @package  ContactBundle\Entity
+ * @category Phone
+ * @package  ContactBundle\DTO
  * @author   Yoann Fleury <yoann.fleury@yahoo.com>
  * @license  MIT License
  * @link     /contacts
  */
-class Phone
+class PhoneDto
 {
     /**
      * The identifier of the phone.
-     * 
+     *
      * @var int
      *
-     * @ORM\Column(name="id",type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @Type("integer")
      */
-    private $_id;
+    private $id;
 
     /**
      * The number of the phone.
-     * 
+     *
      * @var string
      *
-     * @ORM\Column(name="number", type="string", length=255, nullable=true, unique=true)
+     * @Type("string")
      */
-    private $_number;
+    private $number;
 
     /**
      * The type of the phone number.
-     * 
+     *
      * @var int
      *
-     * @ORM\Column(name="type", type="smallint")
+     * @Type("string")
      */
-    private $_type;
-
-    /**
-     * The contact that owns the phone number.
-     *
-     * @var Contact
-     *
-     * @ORM\ManyToOne(targetEntity="Contact", inversedBy="_phones")
-     */
-    private $_contact;
+    private $type;
 
     /**
      * Get id
@@ -75,7 +61,7 @@ class Phone
      */
     public function getId()
     {
-        return $this->_id;
+        return $this->id;
     }
 
     /**
@@ -87,7 +73,7 @@ class Phone
      */
     public function setNumber($number)
     {
-        $this->_number = $number;
+        $this->number = $number;
 
         return $this;
     }
@@ -99,7 +85,7 @@ class Phone
      */
     public function getNumber()
     {
-        return $this->_number;
+        return $this->number;
     }
 
     /**
@@ -111,7 +97,7 @@ class Phone
      */
     public function setType($type)
     {
-        $this->_type = $type;
+        $this->type = $type;
 
         return $this;
     }
@@ -123,7 +109,7 @@ class Phone
      */
     public function getType()
     {
-        return $this->_type;
+        return $this->type;
     }
 }
 

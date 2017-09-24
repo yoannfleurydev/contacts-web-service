@@ -1,7 +1,7 @@
 services:
     kernel.listener.exception:
         class: ContactBundle\Listener\ExceptionListener
-        arguments: ["@logger"]
+        arguments: ["@logger", "@jms_serializer"]
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
 

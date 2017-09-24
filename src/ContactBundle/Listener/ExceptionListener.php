@@ -22,16 +22,22 @@ class ExceptionListener
      * 
      * @var Logger
      */
-    protected $logger;
-    
+    private $_logger;
+
     /**
+     * The serializer to return a JSON exception.
+     */
+    private $_serializer;
+
+    /*
      * Constructor of the ExceptionListener.
      *
      * @param Logger $logger The instance of the logger dependency.
      */
-    public function __construct(Logger $logger)
+    public function __construct(Logger $logger, Serializer $serializer)
     {
-        $this->logger = $logger;
+        $this->_logger = $logger;
+        $this->_serializer = $serializer;
     }
     
     public function onKernelException(GetResponseForExceptionEvent $event)
@@ -40,14 +46,15 @@ class ExceptionListener
 
         if ($exception instanceof HttpException) {
             // If instance of HttpException then send expected status code
-            $this->logger->addInfo(
+            $this->_logger->addInfo(
                 get_class($exception) .
                 ' (' . $exception->getStatusCode() . ') : ' .
                 $event->getRequest()->getRequestUri()
             );
+
             $event->setResponse(
                 new Response(
-                    '', 
+                    $this->_serializer->serialize($exception->getMessage(), 'json'), 
                     $exception->getStatusCode(), 
                     ['Content-Type' => 'application/json']
                 )

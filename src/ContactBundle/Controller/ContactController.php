@@ -20,6 +20,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+use ContactBundle\Exception\ContactUnprocessableEntityHttpException;
+
 /**
  * Contact controller.
  *
@@ -71,7 +73,8 @@ class ContactController extends Controller
     }
 
     /**
-     * Route to add contacts
+     * Route to add contacts. Send JSON with the correct data to add
+     * a \ContactBundle\Entity\Contact.
      *
      * @param Request $request The request send by the client.
      *
@@ -83,6 +86,11 @@ class ContactController extends Controller
     public function addAction(Request $request)
     {
         $json = $request->getContent();
+
+        if (empty($json)) {
+            throw new ContactUnprocessableEntityHttpException();
+        }
+
         $contactDto = $this->_serializer->deserialize(
             $json,
             'ContactBundle\DTO\ContactDto',
@@ -101,11 +109,11 @@ class ContactController extends Controller
 
     /**
      * Route to remove a contact.
-     * 
+     *
      * @param integer $id The identifier of the contact to remove.
-     * 
-     * @Route("/contacts/{id}", requirements={"id": "\d+"}) 
-     * 
+     *
+     * @Route("/contacts/{id}", requirements={"id": "\d+"})
+     *
      * @return Response The response with a 204 NO CONTENT if everything is good
      *                  or an error instead.
      */
@@ -114,9 +122,36 @@ class ContactController extends Controller
         $this->_contactService->deleteContact($id);
 
         return new Response(
-            '', 
-            Response::HTTP_NO_CONTENT, 
+            '',
+            Response::HTTP_NO_CONTENT,
             ['Content-Type' => 'application/json']
         );
+    }
+
+    /**
+     * Route to add a phone number to a contact.
+     *
+     * @param integer $id
+     *
+     * @Route("/contacts/{id}/phones", requirements={"id": "\d+"})
+     *
+     * @return Response The response with a 201 CREATED if everything is good or
+     *                  an error instead.
+     */
+    public function addPhone(Request $request, $id)
+    {
+        $json = $request->getContent();
+
+        if (empty($json)) {
+            throw new PhoneUnprocessableEntityHttpException();
+        }
+
+        $phoneDto = $this->_serializer->deserialize(
+            $json,
+            'ContactBundle\DTO\PhoneDto',
+            'json'
+        );
+
+        // TODO Save the phone, add to the contact. Return the response
     }
 }
