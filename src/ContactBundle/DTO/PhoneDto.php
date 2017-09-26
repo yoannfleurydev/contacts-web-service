@@ -54,6 +54,13 @@ class PhoneDto
      */
     private $type;
 
+    public function setId($id): PhoneDto
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     /**
      * Get id
      *

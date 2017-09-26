@@ -86,7 +86,7 @@ class ContactDto
      *
      * @var Phone[] The phone numbers of the contact.
      *
-     * @Type("ArrayCollection<PhoneDto>")
+     * @Type("array<ContactBundle\DTO\PhoneDto>")
      */
     private $phones;
 
@@ -160,5 +160,17 @@ class ContactDto
     public function getNote(): ?string
     {
         return $this->note;
+    }
+
+    public function setPhones($phones): ContactDto
+    {
+        $this->phones = $phones;
+
+        return $this;
+    }
+
+    public function getPhones()
+    {
+        return $this->phones;
     }
 }

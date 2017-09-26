@@ -125,5 +125,28 @@ class Phone
     {
         return $this->_type;
     }
+
+    /**
+     * Set the contact that is the owner of the phone number.
+     *
+     * @param Contact $contact The contact owner of the phone number.
+     * @return Phone The current phone.
+     */
+    public function setContact(Contact $contact): Phone
+    {
+        $this->_contact = $contact;
+
+        return $this;
+    }
+
+    /**
+     * Get the contact, owner of the phone number.
+     *
+     * @return Contact The contact owner of the phone number.
+     */
+    public function getContact(): Contact
+    {
+        return $this->_contact;
+    }
 }
 

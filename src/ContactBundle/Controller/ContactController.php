@@ -21,6 +21,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use ContactBundle\Exception\ContactUnprocessableEntityHttpException;
+use ContactBundle\Exception\PhoneUnprocessableEntityHttpException;
 
 /**
  * Contact controller.
@@ -35,9 +36,26 @@ use ContactBundle\Exception\ContactUnprocessableEntityHttpException;
  */
 class ContactController extends Controller
 {
+    /**
+     * The serializer to transform DTO to JSON.
+     *
+     * @var \JMS\Serializer\Serializer
+     */
     private $_serializer;
 
+    /**
+     * The contact service to do the logic.
+     *
+     * @var \ContactBundle\Service\ContactService
+     */
     private $_contactService;
+
+    /**
+     * The phone service to do the logic.
+     *
+     * @var \ContactBundle\Service\PhoneService
+     */
+    private $_phoneService;
 
     /**
      * Override of the setContainer method from the Controller class.
@@ -52,6 +70,7 @@ class ContactController extends Controller
         parent::setContainer($container);
         $this->_serializer = $this->get('jms_serializer');
         $this->_contactService = $this->get('contact.service.contact');
+        $this->_phoneService = $this->get('contact.service.phone');
     }
 
     /**
@@ -138,7 +157,7 @@ class ContactController extends Controller
      * @return Response The response with a 201 CREATED if everything is good or
      *                  an error instead.
      */
-    public function addPhone(Request $request, $id)
+    public function addPhoneAction(Request $request, $id)
     {
         $json = $request->getContent();
 
@@ -152,6 +171,13 @@ class ContactController extends Controller
             'json'
         );
 
-        // TODO Save the phone, add to the contact. Return the response
+        $this->_phoneService->createPhone($phoneDto, $id);
+        $contactDto = $this->_contactService->get($id);
+
+        return new Response(
+            $this->_serializer->serialize($contactDto, 'json'),
+            Response::HTTP_CREATED,
+            ["Content-Type" => "application/json"]
+        );
     }
 }

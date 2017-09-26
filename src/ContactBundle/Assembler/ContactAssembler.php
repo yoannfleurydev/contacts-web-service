@@ -16,7 +16,8 @@ class ContactAssembler
             ->setLastName($entity->getLastName())
             ->setCompany($entity->getCompany())
             ->setWebsite($entity->getWebsite())
-            ->setNote($entity->getNote());
+            ->setNote($entity->getNote())
+            ->setPhones(PhoneAssembler::entitiesToDtos($entity->getPhones()));
 
         return $dto;
     }

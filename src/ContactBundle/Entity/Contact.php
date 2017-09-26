@@ -230,7 +230,14 @@ class Contact
      *
      * @return Contact The current contact.
      */
-    public function addPhone(Phone $phone) {
+    public function addPhone(Phone $phone)
+    {
         $this->_phones[] = $phone;
+        $phone->setContact($this);
+    }
+
+    public function getPhones()
+    {
+        return $this->_phones;
     }
 }

@@ -8,3 +8,6 @@ services:
     contact.service.contact:
         class: ContactBundle\Service\ContactService
         arguments: ["@logger", "@doctrine.orm.entity_manager"]
+    contact.service.phone:
+        class: ContactBundle\Service\PhoneService
+        arguments: ["@logger", "@doctrine.orm.entity_manager"]
