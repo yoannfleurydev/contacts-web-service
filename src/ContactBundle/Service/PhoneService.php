@@ -81,13 +81,14 @@ class PhoneService
      * Method to create a phone from a DTO.
      *
      * @param Phone $phone The phone
+     * @param integer $id The identifier of the contact.
      * 
      * @return void
      */
     public function createPhone(PhoneDto $phone, $id): void
     {
         $phoneEntity = PhoneAssembler::dtoToEntity($phone);
-        $contactEntity = $this->_contactRepository->findOneBy(['_id' => $id]);
+        $contactEntity = $this->_contactRepository->findOneById($id);
         
         if ($contactEntity === null) {
             throw new ContactNotFoundException();

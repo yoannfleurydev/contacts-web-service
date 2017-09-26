@@ -39,34 +39,35 @@ class Phone
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $_id;
+    private $id;
 
     /**
      * The number of the phone.
      * 
      * @var string
      *
-     * @ORM\Column(name="number", type="string", length=255, nullable=true, unique=true)
+     * @ORM\Column(name="number", type="string", length=255, nullable=true,
+     *             unique=true)
      */
-    private $_number;
+    private $number;
 
     /**
      * The type of the phone number.
      * 
      * @var int
      *
-     * @ORM\Column(name="type", type="smallint")
+     * @ORM\Column(name="type", type="string", length=255)
      */
-    private $_type;
+    private $type;
 
     /**
      * The contact that owns the phone number.
      *
      * @var Contact
      *
-     * @ORM\ManyToOne(targetEntity="Contact", inversedBy="_phones")
+     * @ORM\ManyToOne(targetEntity="Contact", inversedBy="phones")
      */
-    private $_contact;
+    private $contact;
 
     /**
      * Get id
@@ -75,7 +76,7 @@ class Phone
      */
     public function getId()
     {
-        return $this->_id;
+        return $this->id;
     }
 
     /**
@@ -87,7 +88,7 @@ class Phone
      */
     public function setNumber($number)
     {
-        $this->_number = $number;
+        $this->number = $number;
 
         return $this;
     }
@@ -99,7 +100,7 @@ class Phone
      */
     public function getNumber()
     {
-        return $this->_number;
+        return $this->number;
     }
 
     /**
@@ -111,7 +112,7 @@ class Phone
      */
     public function setType($type)
     {
-        $this->_type = $type;
+        $this->type = $type;
 
         return $this;
     }
@@ -123,18 +124,19 @@ class Phone
      */
     public function getType()
     {
-        return $this->_type;
+        return $this->type;
     }
 
     /**
      * Set the contact that is the owner of the phone number.
      *
      * @param Contact $contact The contact owner of the phone number.
+     * 
      * @return Phone The current phone.
      */
     public function setContact(Contact $contact): Phone
     {
-        $this->_contact = $contact;
+        $this->contact = $contact;
 
         return $this;
     }
@@ -146,7 +148,7 @@ class Phone
      */
     public function getContact(): Contact
     {
-        return $this->_contact;
+        return $this->contact;
     }
 }
 

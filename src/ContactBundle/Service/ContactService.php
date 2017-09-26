@@ -71,7 +71,7 @@ class ContactService
 
     public function get($id): ContactDto
     {
-        $contacts = $this->_contactRepository->findOneBy(['_id' => $id]);
+        $contacts = $this->_contactRepository->findOneById($id);
         return ContactAssembler::entityToDto($contacts);
     }
 
@@ -105,7 +105,7 @@ class ContactService
 
     public function deleteContact($id): void
     {
-        $contactEntity = $this->_contactRepository->findOneBy(['_id' => $id]);
+        $contactEntity = $this->_contactRepository->findOneById($id);
 
         if ($contactEntity === null) {
             throw new ContactNotFoundException();

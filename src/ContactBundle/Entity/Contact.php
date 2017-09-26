@@ -39,7 +39,7 @@ class Contact
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $_id;
+    private $id;
 
     /**
      * The first name of the contact.
@@ -48,7 +48,7 @@ class Contact
      *
      * @ORM\Column(name="firstName", type="string", length=255)
      */
-    private $_firstName;
+    private $firstName;
 
     /**
      * The last name of the contact.
@@ -57,7 +57,7 @@ class Contact
      *
      * @ORM\Column(name="lastName", type="string", length=255)
      */
-    private $_lastName;
+    private $lastName;
 
     /**
      * The company of the contact.
@@ -66,7 +66,7 @@ class Contact
      *
      * @ORM\Column(name="company", type="string", length=255, nullable=true)
      */
-    private $_company;
+    private $company;
 
     /**
      * The URL to the website of the contact.
@@ -75,7 +75,7 @@ class Contact
      *
      * @ORM\Column(name="website", type="string", length=255, nullable=true)
      */
-    private $_website;
+    private $website;
 
     /**
      * The note made by the user, for the contact.
@@ -84,16 +84,16 @@ class Contact
      *
      * @ORM\Column(name="note", type="text", nullable=true)
      */
-    private $_note;
+    private $note;
 
     /**
      * The phones of the contact.
      *
      * @var Phone[]
      *
-     * @ORM\OneToMany(targetEntity="Phone", mappedBy="_contact")
+     * @ORM\OneToMany(targetEntity="Phone", mappedBy="contact")
      */
-    private $_phones;
+    private $phones;
 
     /**
      * Get id
@@ -102,7 +102,7 @@ class Contact
      */
     public function getId()
     {
-        return $this->_id;
+        return $this->id;
     }
 
     /**
@@ -114,7 +114,7 @@ class Contact
      */
     public function setFirstName($firstName)
     {
-        $this->_firstName = $firstName;
+        $this->firstName = $firstName;
 
         return $this;
     }
@@ -126,7 +126,7 @@ class Contact
      */
     public function getFirstName()
     {
-        return $this->_firstName;
+        return $this->firstName;
     }
 
     /**
@@ -138,7 +138,7 @@ class Contact
      */
     public function setLastName($lastName)
     {
-        $this->_lastName = $lastName;
+        $this->lastName = $lastName;
 
         return $this;
     }
@@ -150,7 +150,7 @@ class Contact
      */
     public function getLastName()
     {
-        return $this->_lastName;
+        return $this->lastName;
     }
 
     /**
@@ -162,7 +162,7 @@ class Contact
      */
     public function setCompany($company)
     {
-        $this->_company = $company;
+        $this->company = $company;
 
         return $this;
     }
@@ -174,7 +174,7 @@ class Contact
      */
     public function getCompany()
     {
-        return $this->_company;
+        return $this->company;
     }
 
     /**
@@ -186,7 +186,7 @@ class Contact
      */
     public function setWebsite($website)
     {
-        $this->_website = $website;
+        $this->website = $website;
 
         return $this;
     }
@@ -198,7 +198,7 @@ class Contact
      */
     public function getWebsite()
     {
-        return $this->_website;
+        return $this->website;
     }
 
     /**
@@ -210,7 +210,7 @@ class Contact
      */
     public function setNote($note)
     {
-        $this->_note = $note;
+        $this->note = $note;
 
         return $this;
     }
@@ -222,22 +222,29 @@ class Contact
      */
     public function getNote()
     {
-        return $this->_note;
+        return $this->note;
     }
 
     /**
      * Add phone to the current contact.
      *
+     * @param Phone $phone The phone to add to the Contact.
+     *
      * @return Contact The current contact.
      */
     public function addPhone(Phone $phone)
     {
-        $this->_phones[] = $phone;
+        $this->phones[] = $phone;
         $phone->setContact($this);
     }
 
+    /**
+     * Get the phones for the current contact.
+     *
+     * @return Phone[] An array with phone numbers in it. 
+     */
     public function getPhones()
     {
-        return $this->_phones;
+        return $this->phones;
     }
 }
