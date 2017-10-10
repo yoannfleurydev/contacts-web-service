@@ -68,7 +68,3 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
-
-lexik_jwt_authentication:
-    encoder:
-        signature_algorithm: HS512
