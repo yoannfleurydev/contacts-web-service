@@ -5,7 +5,7 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 
 /**
  * AppKernel is like the main class in Symfony.
- * 
+ *
  * @author Yoann Fleury <yoann.fleury@yahoo.com>
  */
 class AppKernel extends Kernel
@@ -28,6 +28,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new ContactBundle\ContactBundle(),
+            new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

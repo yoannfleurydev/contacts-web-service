@@ -17,3 +17,6 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+
+    # Override the JMS Serializer naming strategy
+    jms_serializer.camel_case_naming_strategy.class

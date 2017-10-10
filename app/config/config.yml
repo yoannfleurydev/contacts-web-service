@@ -69,8 +69,6 @@ swiftmailer:
     password: '%mailer_password%'
     spool: { type: memory }
 
-jms_serializer:
-    property_naming:
-        separator: ~
-        lower_case: false
-        enable_cache: true
+lexik_jwt_authentication:
+    encoder:
+        signature_algorithm: HS512
