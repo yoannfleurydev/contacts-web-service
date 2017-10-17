@@ -19,4 +19,4 @@ parameters:
     secret: ThisTokenIsNotSoSecretChangeIt
 
     # Override the JMS Serializer naming strategy
-    jms_serializer.camel_case_naming_strategy.class
+    jms_serializer.camel_case_naming_strategy.class: JMS\Serializer\Naming\IdenticalPropertyNamingStrategy
