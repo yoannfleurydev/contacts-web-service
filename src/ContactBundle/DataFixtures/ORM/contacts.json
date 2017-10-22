@@ -1,0 +1,98 @@
+[
+  {
+    "name": "Aimee",
+    "firstname": "Griffin",
+    "company": "VINCH",
+    "about": "Tempor culpa ipsum velit nostrud excepteur.",
+    "phone": "(935) 557-2648",
+    "phoneType": "Fax"
+  },
+  {
+    "name": "Palmer",
+    "firstname": "Delacruz",
+    "company": "PROXSOFT",
+    "about": "Non commodo incididunt do ex consequat voluptate nostrud.",
+    "phone": "(935) 417-3992",
+    "phoneType": "Portable"
+  },
+  {
+    "name": "Hensley",
+    "firstname": "Warren",
+    "company": "EXOVENT",
+    "about": "Do nostrud enim enim aliquip ex tempor ipsum ipsum aliqua aliqua eu nostrud cillum.",
+    "phone": "(979) 451-3691",
+    "phoneType": "Portable"
+  },
+  {
+    "name": "Amparo",
+    "firstname": "Beach",
+    "company": "PUSHCART",
+    "about": "Ex fugiat cupidatat incididunt aute magna aliquip.",
+    "phone": "(913) 568-3978",
+    "phoneType": "Fax"
+  },
+  {
+    "name": "Tillman",
+    "firstname": "Wyatt",
+    "company": "ENTROFLEX",
+    "about": "Dolor pariatur labore fugiat laboris velit ipsum eiusmod minim fugiat id cillum.",
+    "phone": "(818) 438-2391",
+    "phoneType": "Fax"
+  },
+  {
+    "name": "Faulkner",
+    "firstname": "Zamora",
+    "company": "SPLINX",
+    "about": "Sunt amet tempor minim ullamco pariatur aute magna non incididunt culpa dolor.",
+    "phone": "(891) 421-2112",
+    "phoneType": "Personnel"
+  },
+  {
+    "name": "Kemp",
+    "firstname": "Contreras",
+    "company": "POOCHIES",
+    "about": "Nulla excepteur irure cupidatat excepteur consequat aute.",
+    "phone": "(940) 448-2398",
+    "phoneType": "Portable"
+  },
+  {
+    "name": "Alvarado",
+    "firstname": "Ewing",
+    "company": "COMTREK",
+    "about": "Ea sit irure cupidatat laborum cupidatat excepteur aute ipsum proident ipsum fugiat non ad.",
+    "phone": "(946) 410-3982",
+    "phoneType": "Portable"
+  },
+  {
+    "name": "Wilkerson",
+    "firstname": "Kidd",
+    "company": "SCENTY",
+    "about": "Lorem ullamco cillum adipisicing esse cillum consectetur consectetur cillum reprehenderit ut reprehenderit labore occaecat est.",
+    "phone": "(997) 600-3118",
+    "phoneType": "Portable"
+  },
+  {
+    "name": "Lora",
+    "firstname": "Sosa",
+    "company": "XINWARE",
+    "about": "Eiusmod dolor laborum esse sit nulla ullamco.",
+    "phone": "(923) 441-3889",
+    "phoneType": "Personnel"
+  },
+  {
+    "name": "Goldie",
+    "firstname": "Holland",
+    "company": "SYBIXTEX",
+    "about": "Adipisicing proident dolore laboris duis aliquip nostrud sint non dolore proident.",
+    "phone": "(938) 454-3367",
+    "phoneType": "Portable"
+  },
+  {
+    "name": "Bird",
+    "firstname": "Sellers",
+    "company": "KOOGLE",
+    "about": "Laborum aute in incididunt amet.",
+    "phone": "(871) 560-2812",
+    "phoneType": "Fax"
+  }
+]
