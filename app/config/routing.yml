@@ -2,3 +2,6 @@ contact:
     resource: "@ContactBundle/Controller/"
     type:     annotation
     prefix:   /
+
+api_login_check:
+    path: /api/login_check
