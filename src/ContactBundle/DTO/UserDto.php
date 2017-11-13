@@ -1,96 +1,33 @@
 <?php
-/**
- * File for the contact DTO. This DTO represents the person and is connected to
- * multiple phones, dates, emails etc.
- *
- * PHP version 7.1
- *
- * @category Contact
- * @package  ContactBundle\DTO
- * @author   Yoann Fleury <yoann.fleury@yahoo.com>
- * @license  MIT License
- * @link     /contacts
- */
+
 namespace ContactBundle\DTO;
 
 use JMS\Serializer\Annotation\Type;
 
-/**
- * Contact DTO. This DTO represents the person and is connected to
- * multiple phones, dates, emails etc.
- *
- * @category Contact
- * @package  ContactBundle\DTO
- * @author   Yoann Fleury <yoann.fleury@yahoo.com>
- * @license  MIT License
- * @link     /contacts
- */
-class ContactDto
+class UserDto
 {
     /**
-     * The identifier of the contact.
-     *
-     * @var int The identifier of the contact.
-     *
      * @Type("integer")
      */
     private $id;
 
     /**
-     * The first name of the contact.
-     *
-     * @var string The first name of the contact.
-     *
      * @Type("string")
      */
-    private $firstName;
+    private $username;
 
     /**
-     * The last name of the contact.
-     *
-     * @var string The last name of the contact.
-     *
      * @Type("string")
      */
-    private $lastName;
+    private $plainPassword;
 
     /**
-     * The company of the contact.
-     *
-     * @var string The company of the contact.
-     *
      * @Type("string")
      */
-    private $company;
+    private $password;
 
-    /**
-     * The URL to the website of the contact.
-     *
-     * @var string The URL of the website of the contact.
-     *
-     * @Type("string")
-     */
-    private $website;
 
-    /**
-     * The note made by the user, for the contact.
-     *
-     * @var string The note made by the user, for the contact.
-     *
-     * @Type("string")
-     */
-    private $note;
-
-    /**
-     * The phones of the contact.
-     *
-     * @var Phone[] The phone numbers of the contact.
-     *
-     * @Type("array<ContactBundle\DTO\PhoneDto>")
-     */
-    private $phones;
-
-    public function setId($id): ContactDto
+    public function setId($id): UserDto
     {
         $this->id = $id;
 
@@ -102,75 +39,39 @@ class ContactDto
         return $this->id;
     }
 
-    public function setFirstName($firstName): ContactDto
+    public function setUsername($username): UserDto
     {
-        $this->firstName = $firstName;
+        $this->username = $username;
 
         return $this;
     }
 
-    public function getFirstName(): string
+    public function getUsername(): string
     {
-        return $this->firstName;
+        return $this->username;
     }
 
-    public function setLastName($lastName): ContactDto
+    public function setPlainPassword($plainPassword): UserDto
     {
-        $this->lastName = $lastName;
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }
 
-    public function getLastName(): string
+    public function getPlainPassword(): string
     {
-        return $this->lastName;
+        return $this->plainPassword;
     }
 
-    public function setCompany($company): ContactDto
+    public function setPassword($password): UserDto
     {
-        $this->company = $company;
+        $this->password = $password;
 
         return $this;
     }
 
-    public function getCompany(): ?string
+    public function getPassword(): string
     {
-        return $this->company;
-    }
-
-    public function setWebsite($website): ContactDto
-    {
-        $this->website = $website;
-
-        return $this;
-    }
-
-    public function getWebsite(): ?string
-    {
-        return $this->website;
-    }
-
-    public function setNote($note): ContactDto
-    {
-        $this->note = $note;
-
-        return $this;
-    }
-
-    public function getNote(): ?string
-    {
-        return $this->note;
-    }
-
-    public function setPhones($phones): ContactDto
-    {
-        $this->phones = $phones;
-
-        return $this;
-    }
-
-    public function getPhones()
-    {
-        return $this->phones;
+        return $this->password;
     }
 }

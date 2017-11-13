@@ -2,37 +2,34 @@
 
 namespace ContactBundle\Assembler;
 
-use ContactBundle\Entity\Contact;
-use ContactBundle\DTO\ContactDto;
+use ContactBundle\Entity\User;
+use ContactBundle\DTO\UserDto;
 
-class ContactAssembler
+class UserAssembler
 {
-    public static function entityToDto(Contact $entity)
+    public static function entityToDto(User $entity)
     {
-        $dto = new ContactDto();
+        $dto = new UserDto();
 
         $dto->setId($entity->getId())
-            ->setFirstName($entity->getFirstName())
-            ->setLastName($entity->getLastName())
-            ->setCompany($entity->getCompany())
-            ->setWebsite($entity->getWebsite())
-            ->setNote($entity->getNote())
-            ->setPhones(PhoneAssembler::entitiesToDtos($entity->getPhones()));
+            ->setUsername($entity->getUsername())
+            ->setPassword($entity->getPassword())
+            ->setPlainPassword($entity->getPlainPassword());
 
         return $dto;
     }
 
     public static function dtoToEntity($dto)
     {
-        $contact = new Contact();
+        $user = new User();
 
-        $contact->setFirstName($dto->getFirstName())
-            ->setLastName($dto->getLastName())
-            ->setCompany($dto->getCompany())
-            ->setWebsite($dto->getWebsite())
-            ->setNote($dto->getNote());
+        var_dump($dto);
+
+        $user->setUsername($dto->getUsername())
+            ->setPassword($dto->getPassword())
+            ->setPlainPassword($dto->getPlainPassword());
         
-        return $contact;
+        return $user;
     }
 
     public static function entitiesToDtos($entities)

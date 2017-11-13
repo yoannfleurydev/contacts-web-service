@@ -1,37 +1,16 @@
 <?php
-
-/**
- * File for the contact service. Use this class to return DTO from entities from
- * database.
- * 
- * PHP version 7.1
- * 
- * @category Contact
- * @package  ContactBundle\Service
- * @author   Yoann Fleury <yoann.fleury@yahoo.com>
- * @license  MIT License
- * @link     /contacts
- */
 namespace ContactBundle\Service;
 
+use ContactBundle\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Monolog\Logger;
 
-use ContactBundle\Assembler\ContactAssembler;
-use ContactBundle\DTO\ContactDto;
-use ContactBundle\Exception\ContactNotFoundException;
+use ContactBundle\Assembler\UserAssembler;
+use ContactBundle\DTO\UserDto;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
-/**
- * Contact service. Use this class to return DTO from entities from
- * database.
- * 
- * @category Contact
- * @package  ContactBundle\Service
- * @author   Yoann Fleury <yoann.fleury@yahoo.com>
- * @license  MIT License
- * @link     /contacts
- */
-class ContactService
+
+class UserService
 {
     /**
      * Logger to log the exceptions
@@ -50,9 +29,9 @@ class ContactService
     /**
      * Repository for the contacts
      *
-     * @var ContactRepository
+     * @var UserRepository
      */
-    private $_contactRepository;
+    private $_userRepository;
 
     /**
      * Constructor of the contact service. It takes as parameters the logger
@@ -65,53 +44,38 @@ class ContactService
     {
         $this->_logger = $logger;
         $this->_entityManager = $entityManager;
-        $this->_contactRepository = $this->_entityManager
-            ->getRepository('ContactBundle:Contact');
+        $this->_userRepository = $this->_entityManager
+            ->getRepository('ContactBundle:User');
     }
 
-    public function get($id): ContactDto
+    public function get($id): UserDto
     {
-        $contacts = $this->_contactRepository->findOneById($id);
-        return ContactAssembler::entityToDto($contacts);
+        $user = $this->_userRepository->findOneById($id);
+        return UserAssembler::entityToDto($user);
     }
 
     /**
-     * Get all the contact as DTO.
+     * Method to create a user from a DTO.
      *
-     * @return ContactDto[]
-     */
-    public function getAllContacts()
-    {
-        $contacts = $this->_contactRepository->findAll();
-        return ContactAssembler::entitiesToDtos($contacts);
-    }
-
-    /**
-     * Method to create a contact from a DTO.
-     *
-     * @param ContactDto $contact The contact
+     * @param UserDto $user The user
      * 
      * @return void
      */
-    public function createContact(ContactDto $contact): void
+    public function createUser(UserDto $user): void
     {
-        $contactEntity = ContactAssembler::dtoToEntity($contact);
+        $userEntity = UserAssembler::dtoToEntity($user);
 
-        $this->_entityManager->persist($contactEntity);
+        $this->_entityManager->persist($userEntity);
         $this->_entityManager->flush();
 
-        $contact->setId($contactEntity->getId());
+        $user->setId($userEntity->getId());
     }
 
-    public function deleteContact($id): void
+    public function deleteUser($id): void
     {
-        $contactEntity = $this->_contactRepository->findOneById($id);
+        $userEntity = $this->_userRepository->findOneById($id);
 
-        if ($contactEntity === null) {
-            throw new ContactNotFoundException();
-        }
-
-        $this->_entityManager->remove($contactEntity);
+        $this->_entityManager->remove($userEntity);
         $this->_entityManager->flush();
     }
 }

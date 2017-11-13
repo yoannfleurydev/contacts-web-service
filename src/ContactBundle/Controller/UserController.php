@@ -1,15 +1,4 @@
 <?php
-/**
- * File for the contact controller.
- *
- * PHP version 7.1
- *
- * @category Contact
- * @package  ContactBundle\Controller
- * @author   Yoann Fleury <yoann.fleury@yahoo.com>
- * @license  MIT License
- * @link     /contacts
- */
 
 namespace ContactBundle\Controller;
 
@@ -20,21 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-use ContactBundle\Exception\ContactUnprocessableEntityHttpException;
-use ContactBundle\Exception\PhoneUnprocessableEntityHttpException;
-
-/**
- * Contact controller.
- *
- * PHP version 7.1
- *
- * @category Contact
- * @package  ContactBundle\Controller
- * @author   Yoann Fleury <yoann.fleury@yahoo.com>
- * @license  MIT License
- * @link     /contacts
- */
-class ContactController extends Controller
+class UserController extends Controller
 {
     /**
      * The serializer to transform DTO to JSON.
@@ -46,16 +21,9 @@ class ContactController extends Controller
     /**
      * The contact service to do the logic.
      *
-     * @var \ContactBundle\Service\ContactService
+     * @var \ContactBundle\Service\UserService
      */
-    private $_contactService;
-
-    /**
-     * The phone service to do the logic.
-     *
-     * @var \ContactBundle\Service\PhoneService
-     */
-    private $_phoneService;
+    private $_userService;
 
     /**
      * Override of the setContainer method from the Controller class.
@@ -69,35 +37,34 @@ class ContactController extends Controller
     {
         parent::setContainer($container);
         $this->_serializer = $this->get('jms_serializer');
-        $this->_contactService = $this->get('contact.service.contact');
-        $this->_phoneService = $this->get('contact.service.phone');
+        $this->_userService = $this->get('contact.service.user');
     }
 
-    /**
-     * Expose the contacts entities
-     *
-     * @Route("/contacts")
-     * @Method({"GET"})
-     *
-     * @return Response
-     */
-    public function getAllAction()
-    {
-        $contacts = $this->_contactService->getAllContacts();
-        return new Response(
-            $this->_serializer->serialize($contacts, 'json'),
-            Response::HTTP_OK,
-            ["Content-Type" => "application/json"]
-        );
-    }
+//    /**
+//     * Expose the contacts entities
+//     *
+//     * @Route("/contacts")
+//     * @Method({"GET"})
+//     *
+//     * @return Response
+//     */
+//    public function getAllAction()
+//    {
+//        $contacts = $this->_contactService->getAllContacts();
+//        return new Response(
+//            $this->_serializer->serialize($contacts, 'json'),
+//            Response::HTTP_OK,
+//            ["Content-Type" => "application/json"]
+//        );
+//    }
 
     /**
-     * Route to add contacts. Send JSON with the correct data to add
-     * a \ContactBundle\Entity\Contact.
+     * Route to add user. Send JSON with the correct data to add
+     * a \ContactBundle\Entity\User.
      *
      * @param Request $request The request send by the client.
      *
-     * @Route("/contacts")
+     * @Route("/user")
      * @Method({"POST"})
      *
      * @return Response
@@ -106,19 +73,19 @@ class ContactController extends Controller
     {
         $json = $request->getContent();
 
-        if (empty($json)) {
-            throw new ContactUnprocessableEntityHttpException();
-        }
+//        if (empty($json)) {
+//            throw new ContactUnprocessableEntityHttpException();
+//        }
 
-        $contactDto = $this->_serializer->deserialize(
+        $userDto = $this->_serializer->deserialize(
             $json,
-            'ContactBundle\DTO\ContactDto',
+            'ContactBundle\DTO\UserDto',
             'json'
         );
 
-        $this->_contactService->createContact($contactDto);
+        $this->_userService->createUser($userDto);
 
-        $json = $this->_serializer->serialize($contactDto, 'json');
+        $json = $this->_serializer->serialize($userDto, 'json');
         return new Response(
             $json,
             Response::HTTP_CREATED,
@@ -126,58 +93,58 @@ class ContactController extends Controller
         );
     }
 
-    /**
-     * Route to remove a contact.
-     *
-     * @param integer $id The identifier of the contact to remove.
-     *
-     * @Route("/contacts/{id}", requirements={"id": "\d+"})
-     *
-     * @return Response The response with a 204 NO CONTENT if everything is good
-     *                  or an error instead.
-     */
-    public function deleteAction($id)
-    {
-        $this->_contactService->deleteContact($id);
-
-        return new Response(
-            '',
-            Response::HTTP_NO_CONTENT,
-            ['Content-Type' => 'application/json']
-        );
-    }
-
-    /**
-     * Route to add a phone number to a contact.
-     *
-     * @param integer $id
-     *
-     * @Route("/contacts/{id}/phones", requirements={"id": "\d+"})
-     *
-     * @return Response The response with a 201 CREATED if everything is good or
-     *                  an error instead.
-     */
-    public function addPhoneAction(Request $request, $id)
-    {
-        $json = $request->getContent();
-
-        if (empty($json)) {
-            throw new PhoneUnprocessableEntityHttpException();
-        }
-
-        $phoneDto = $this->_serializer->deserialize(
-            $json,
-            'ContactBundle\DTO\PhoneDto',
-            'json'
-        );
-
-        $this->_phoneService->createPhone($phoneDto, $id);
-        $contactDto = $this->_contactService->get($id);
-
-        return new Response(
-            $this->_serializer->serialize($contactDto, 'json'),
-            Response::HTTP_CREATED,
-            ["Content-Type" => "application/json"]
-        );
-    }
+//    /**
+//     * Route to remove a contact.
+//     *
+//     * @param integer $id The identifier of the contact to remove.
+//     *
+//     * @Route("/contacts/{id}", requirements={"id": "\d+"})
+//     *
+//     * @return Response The response with a 204 NO CONTENT if everything is good
+//     *                  or an error instead.
+//     */
+//    public function deleteAction($id)
+//    {
+//        $this->_contactService->deleteContact($id);
+//
+//        return new Response(
+//            '',
+//            Response::HTTP_NO_CONTENT,
+//            ['Content-Type' => 'application/json']
+//        );
+//    }
+//
+//    /**
+//     * Route to add a phone number to a contact.
+//     *
+//     * @param integer $id
+//     *
+//     * @Route("/contacts/{id}/phones", requirements={"id": "\d+"})
+//     *
+//     * @return Response The response with a 201 CREATED if everything is good or
+//     *                  an error instead.
+//     */
+//    public function addPhoneAction(Request $request, $id)
+//    {
+//        $json = $request->getContent();
+//
+//        if (empty($json)) {
+//            throw new PhoneUnprocessableEntityHttpException();
+//        }
+//
+//        $phoneDto = $this->_serializer->deserialize(
+//            $json,
+//            'ContactBundle\DTO\PhoneDto',
+//            'json'
+//        );
+//
+//        $this->_phoneService->createPhone($phoneDto, $id);
+//        $contactDto = $this->_contactService->get($id);
+//
+//        return new Response(
+//            $this->_serializer->serialize($contactDto, 'json'),
+//            Response::HTTP_CREATED,
+//            ["Content-Type" => "application/json"]
+//        );
+//    }
 }

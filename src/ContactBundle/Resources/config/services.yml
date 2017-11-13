@@ -11,3 +11,6 @@ services:
     contact.service.phone:
         class: ContactBundle\Service\PhoneService
         arguments: ["@logger", "@doctrine.orm.entity_manager"]
+    contact.service.user:
+        class: ContactBundle\Service\UserService
+        arguments: ["@logger", "@doctrine.orm.entity_manager"]
