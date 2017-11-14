@@ -2,9 +2,11 @@
 
 namespace ContactBundle\Repository;
 
+use Doctrine\ORM\EntityRepository;
+
 /**
  * UserRepository
  */
-class UserRepository extends \Doctrine\ORM\EntityRepository
+class UserRepository extends EntityRepository
 {
 }

@@ -5,13 +5,12 @@ namespace ContactBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="ContactBundle\Repository\UserRepository")
  * @UniqueEntity(fields="username", message="Username already taken")
  */
-class User implements UserInterface
+class User
 {
 
     /**
@@ -67,10 +66,13 @@ class User implements UserInterface
 
     /**
      * @param mixed $username
+     * @return $this
      */
     public function setUsername($username)
     {
         $this->username = $username;
+
+        return $this;
     }
 
     /**
@@ -83,10 +85,13 @@ class User implements UserInterface
 
     /**
      * @param mixed $plainPassword
+     * @return $this
      */
     public function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
+
+        return $this;
     }
 
     /**
@@ -99,10 +104,13 @@ class User implements UserInterface
 
     /**
      * @param mixed $password
+     * @return $this
      */
     public function setPassword($password)
     {
         $this->password = $password;
+
+        return $this;
     }
 
     /**

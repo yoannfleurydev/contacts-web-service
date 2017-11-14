@@ -23,8 +23,6 @@ class UserAssembler
     {
         $user = new User();
 
-        var_dump($dto);
-
         $user->setUsername($dto->getUsername())
             ->setPassword($dto->getPassword())
             ->setPlainPassword($dto->getPlainPassword());

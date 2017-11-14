@@ -3,14 +3,13 @@
 security:
 
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+        ContactBundle\Entity\User: plaintext
 
     providers:
-        in_memory:
-            memory:
-                users:
-                    admin:
-                        password: admin
+        entity_provider:
+            entity:
+                class: ContactBundle\Entity\User
+                property: username
 
     firewalls:
         login:
@@ -19,12 +18,14 @@ security:
             anonymous: true
             form_login:
                 check_path:               /api/login_check
+                username_parameter:       _username
+                password_parameter:       _password
                 success_handler:          lexik_jwt_authentication.handler.authentication_success
                 failure_handler:          lexik_jwt_authentication.handler.authentication_failure
                 require_previous_session: false
 
         api:
-            pattern:   ^/
+            pattern:   ^/api/.*
             stateless: true
             guard:
                 authenticators:
