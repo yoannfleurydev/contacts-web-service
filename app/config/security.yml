@@ -3,19 +3,20 @@
 security:
 
     encoders:
-        ContactBundle\Entity\User: plaintext
+        ContactBundle\Entity\User:
+            algorithm: plaintext
 
     providers:
-        entity_provider:
+        our_db_provider:
             entity:
                 class: ContactBundle\Entity\User
-                property: username
 
     firewalls:
         login:
             pattern:  ^/api/login
             stateless: true
             anonymous: true
+            provider: our_db_provider
             form_login:
                 check_path:               /api/login_check
                 username_parameter:       _username
@@ -25,7 +26,7 @@ security:
                 require_previous_session: false
 
         api:
-            pattern:   ^/api/.*
+            pattern:   ^/
             stateless: true
             guard:
                 authenticators:
