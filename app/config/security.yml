@@ -4,7 +4,7 @@ security:
 
     encoders:
         ContactBundle\Entity\User:
-            algorithm: plaintext
+            algorithm: bcrypt
 
     providers:
         our_db_provider:
@@ -26,7 +26,7 @@ security:
                 require_previous_session: false
 
         api:
-            pattern:   ^/
+            pattern:   ^/(?!user)
             stateless: true
             guard:
                 authenticators:

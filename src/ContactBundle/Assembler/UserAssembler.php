@@ -12,9 +12,11 @@ class UserAssembler
         $dto = new UserDto();
 
         $dto->setId($entity->getId())
+            ->setIdentifier($entity->getIdentifier())
             ->setUsername($entity->getUsername())
-            ->setPassword($entity->getPassword())
-            ->setPlainPassword($entity->getPlainPassword());
+            ->setPassword($entity->getPassword());
+
+        var_dump($dto);
 
         return $dto;
     }
@@ -24,8 +26,8 @@ class UserAssembler
         $user = new User();
 
         $user->setUsername($dto->getUsername())
-            ->setPassword($dto->getPassword())
-            ->setPlainPassword($dto->getPlainPassword());
+            ->setIdentifier($dto->getIdentifier())
+            ->setPassword($dto->getPassword());
         
         return $user;
     }

@@ -8,6 +8,7 @@ use Symfony\Bridge\Monolog\Logger;
 use ContactBundle\Assembler\UserAssembler;
 use ContactBundle\DTO\UserDto;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 class UserService
@@ -34,16 +35,25 @@ class UserService
     private $_userRepository;
 
     /**
+     * Password Encoder
+     *
+     * @var UserPasswordEncoderInterface $encoder
+     */
+    private $_encoder;
+
+    /**
      * Constructor of the contact service. It takes as parameters the logger
      * service and the entity manager of the application.
      *
      * @param Logger        $logger        The logger service.
      * @param EntityManager $entityManager The entity manager of the application.
+     * @param UserPasswordEncoderInterface $encoder The entity manager of the application.
      */
-    public function __construct(Logger $logger, EntityManager $entityManager)
+    public function __construct(Logger $logger, EntityManager $entityManager, UserPasswordEncoderInterface $encoder)
     {
         $this->_logger = $logger;
         $this->_entityManager = $entityManager;
+        $this->_encoder = $encoder;
         $this->_userRepository = $this->_entityManager
             ->getRepository('ContactBundle:User');
     }
@@ -58,12 +68,15 @@ class UserService
      * Method to create a user from a DTO.
      *
      * @param UserDto $user The user
-     * 
      * @return void
      */
     public function createUser(UserDto $user): void
     {
         $userEntity = UserAssembler::dtoToEntity($user);
+
+        $plainPassword = $userEntity->getPassword();
+        $encoded = $this->_encoder->encodePassword($userEntity, $plainPassword);
+        $userEntity->setPassword($encoded);
 
         $this->_entityManager->persist($userEntity);
         $this->_entityManager->flush();

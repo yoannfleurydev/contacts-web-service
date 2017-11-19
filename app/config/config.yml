@@ -52,6 +52,8 @@ doctrine:
 
     dbal:
         driver: pdo_sqlite
+        types:
+            uuid:  Ramsey\Uuid\Doctrine\UuidType
         path: '%kernel.project_dir%/app/sqlite.db'
         charset: UTF8
 

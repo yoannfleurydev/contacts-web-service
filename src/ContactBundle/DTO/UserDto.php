@@ -14,12 +14,12 @@ class UserDto
     /**
      * @Type("string")
      */
-    private $username;
+    private $identifier;
 
     /**
      * @Type("string")
      */
-    private $plainPassword;
+    private $username;
 
     /**
      * @Type("string")
@@ -37,6 +37,18 @@ class UserDto
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setIdentifier($identifier): UserDto
+    {
+        $this->identifier = $identifier;
+
+        return $this;
+    }
+
+    public function getIdentifier()
+    {
+        return $this->identifier;
     }
 
     public function setUsername($username): UserDto

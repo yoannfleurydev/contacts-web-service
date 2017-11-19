@@ -13,4 +13,4 @@ services:
         arguments: ["@logger", "@doctrine.orm.entity_manager"]
     contact.service.user:
         class: ContactBundle\Service\UserService
-        arguments: ["@logger", "@doctrine.orm.entity_manager"]
+        arguments: ["@logger", "@doctrine.orm.entity_manager", "@security.password_encoder"]
