@@ -7,7 +7,7 @@ use JMS\Serializer\Annotation\Type;
 class UserDto
 {
     /**
-     * @Type("integer")
+     * @Type("string")
      */
     private $id;
 

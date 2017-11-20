@@ -12,7 +12,6 @@ class UserAssembler
         $dto = new UserDto();
 
         $dto->setId($entity->getId())
-            ->setIdentifier($entity->getIdentifier())
             ->setUsername($entity->getUsername())
             ->setPassword($entity->getPassword());
 
@@ -26,7 +25,6 @@ class UserAssembler
         $user = new User();
 
         $user->setUsername($dto->getUsername())
-            ->setIdentifier($dto->getIdentifier())
             ->setPassword($dto->getPassword());
         
         return $user;
