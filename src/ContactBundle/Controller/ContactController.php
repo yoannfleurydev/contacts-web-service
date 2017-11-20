@@ -79,11 +79,19 @@ class ContactController extends Controller
      * @Route("/contacts")
      * @Method({"GET"})
      *
+     * @param Request $request
      * @return Response
      */
-    public function getAllAction()
+    public function getAllAction(Request $request)
     {
-        $contacts = $this->_contactService->getAllContacts();
+        $Authorization = $request->headers->get("Authorization");
+        $token = explode(" ", $Authorization);
+        $token = $token[1];
+        $data = $this->get('lexik_jwt_authentication.encoder')->decode($token);
+
+        $id = $data["uuid"];
+
+        $contacts = $this->_contactService->getAllContactsById($id);
         return new Response(
             $this->_serializer->serialize($contacts, 'json'),
             Response::HTTP_OK,

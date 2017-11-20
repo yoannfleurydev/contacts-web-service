@@ -87,6 +87,17 @@ class ContactService
     }
 
     /**
+     * Get all the contact as DTO.
+     *
+     * @return ContactDto[]
+     */
+    public function getAllContactsById($id)
+    {
+        $contacts = $this->_contactRepository->findAllById($id);
+        return ContactAssembler::entitiesToDtos($contacts);
+    }
+
+    /**
      * Method to create a contact from a DTO.
      *
      * @param ContactDto $contact The contact

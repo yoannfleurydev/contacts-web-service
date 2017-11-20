@@ -12,12 +12,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface, \Serializable
 {
     /**
-     * @ORM\Column(name="id", type="guid")
      * @ORM\Id
+     * @ORM\Column(name="id", type="guid")
      * @ORM\GeneratedValue(strategy="UUID")
      */
     private $id;
-
 
     /**
      * @ORM\Column(type="string", length=25, unique=true)
@@ -28,6 +27,15 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=64)
      */
     private $password;
+
+    /**
+     * Contacts of the user.
+     *
+     * @var Contact[]
+     *
+     * @ORM\OneToMany(targetEntity="Contact", mappedBy="user")
+     */
+    private $contacts;
 
     /**
      * @return mixed
@@ -84,6 +92,23 @@ class User implements UserInterface, \Serializable
         $this->password = $password;
 
         return $this;
+    }
+
+    /**
+     * @return Contact[]
+     */
+    public function getContacts()
+    {
+        return $this->contacts;
+    }
+
+    /**
+     * @param Contact $contacts
+     */
+    public function addContacts(Contact $contacts)
+    {
+        $this->contacts[] = $contacts;
+        $contacts->setUser($this);
     }
 
 

@@ -96,6 +96,34 @@ class Contact
     private $phones;
 
     /**
+     * The user that owns the contact.
+     *
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="contacts")
+     */
+    private $user;
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     * @return Contact
+     */
+    public function setUser(User $user): Contact
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
      * Get id
      *
      * @return int

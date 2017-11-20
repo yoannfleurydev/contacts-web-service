@@ -13,6 +13,8 @@
 
 namespace ContactBundle\Repository;
 
+use Doctrine\ORM\EntityRepository;
+
 /**
  * ContactRepository
  *
@@ -25,7 +27,16 @@ namespace ContactBundle\Repository;
  * @license  MIT License
  * @link     /contacts
  */
-class ContactRepository extends \Doctrine\ORM\EntityRepository
+class ContactRepository extends EntityRepository
 {
+
+    public function findAllById($id)
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.user = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
 
 }
