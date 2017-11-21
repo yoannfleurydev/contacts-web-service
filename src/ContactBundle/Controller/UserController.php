@@ -46,7 +46,7 @@ class UserController extends Controller
      *
      * @param Request $request The request send by the client.
      *
-     * @Route("/user")
+     * @Route("/users")
      * @Method({"POST"})
      *
      * @return Response
