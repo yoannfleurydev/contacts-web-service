@@ -10,16 +10,13 @@ security:
         user_provider:
             entity:
                 class: ContactBundle\Entity\User
-        jwt:
-            lexik_jwt:
-                class: ContactBundle\Entity\User
 
     firewalls:
         login:
             pattern:  ^/login
             stateless: true
             anonymous: true
-            provider: jwt
+            provider: user_provider
             json_login:
                 check_path:               /login
                 username_path:            username
@@ -34,13 +31,6 @@ security:
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
-
-#        dev:
-#            pattern: ^/(_(profiler|wdt)|css|images|js)/
-#            security: false
-
-#        main:
-#            anonymous: ~
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

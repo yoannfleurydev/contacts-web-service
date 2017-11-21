@@ -79,10 +79,9 @@ class ContactController extends Controller
      * @Route("/contacts")
      * @Method({"GET"})
      *
-     * @param Request $request
      * @return Response
      */
-    public function getAllAction(Request $request)
+    public function getAllAction()
     {
         $contacts = $this->_contactService->getAllContactsById($this->getUser()->getId());
         return new Response(

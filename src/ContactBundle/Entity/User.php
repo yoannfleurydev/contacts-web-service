@@ -4,13 +4,12 @@ namespace ContactBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
 
 /**
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="ContactBundle\Repository\UserRepository")
  */
-class User implements UserInterface, \Serializable, JWTUserInterface
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id
@@ -118,7 +117,6 @@ class User implements UserInterface, \Serializable, JWTUserInterface
     {
         return serialize(array(
             $this->id,
-            $this->identifier,
             $this->username,
             $this->password,
             // see section on salt below
@@ -133,7 +131,6 @@ class User implements UserInterface, \Serializable, JWTUserInterface
     {
         list (
             $this->id,
-            $this->identifier,
             $this->username,
             $this->password,
             // see section on salt below
@@ -184,13 +181,5 @@ class User implements UserInterface, \Serializable, JWTUserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
-    }
-
-    public static function createFromPayload($username, array $payload)
-    {
-        return new self(
-            $username,
-            $payload['roles']
-        );
     }
 }

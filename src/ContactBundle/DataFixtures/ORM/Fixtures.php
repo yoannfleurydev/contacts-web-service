@@ -16,14 +16,18 @@ class Fixtures extends Fixture
         $file = file_get_contents(__DIR__."/contacts.json");
         $persons = json_decode($file, true);
 
-        $user = new User();
-        $user->setUsername("test");
+        $user1 = new User();
+        $user1->setUsername("user1");
+        $user2 = new User();
+        $user2->setUsername("user2");
 
         $encoder = $this->container->get("security.password_encoder");
-        $password = $encoder->encodePassword($user, "test");
-        $user->setPassword($password);
+        $password = $encoder->encodePassword($user1, "pass");
+        $user1->setPassword($password);
+        $user2->setPassword($password);
 
-        $manager->persist($user);
+        $manager->persist($user1);
+        $manager->persist($user2);
 
         foreach ($persons as $key=>$person) {
 
@@ -33,7 +37,9 @@ class Fixtures extends Fixture
             $contact->setCompany($person["company"]);
             $contact->setWebsite("www.".strtolower($person["company"]).".com");
             $contact->setNote($person["about"]);
-            $contact->setUser($user);
+
+            $random = rand(1, 2);
+            $random === 1 ? $contact->setUser($user1) : $contact->setUser($user2);
 
             $manager->persist($contact);
 
