@@ -14,6 +14,7 @@
  */
 namespace ContactBundle\Service;
 
+use ContactBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Monolog\Logger;
 
@@ -101,17 +102,19 @@ class ContactService
      * Method to create a contact from a DTO.
      *
      * @param ContactDto $contact The contact
-     * 
-     * @return void
+     * @param User $user
+     *
+     * @return int
      */
-    public function createContact(ContactDto $contact): void
+    public function createContact(ContactDto $contact, User $user): int
     {
-        $contactEntity = ContactAssembler::dtoToEntity($contact);
+        $contactEntity = ContactAssembler::dtoToEntity($contact, $user);
+
 
         $this->_entityManager->persist($contactEntity);
         $this->_entityManager->flush();
 
-        $contact->setId($contactEntity->getId());
+        return $contactEntity->getId();
     }
 
     public function deleteContact($id): void

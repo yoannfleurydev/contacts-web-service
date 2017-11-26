@@ -105,6 +105,7 @@ class ContactController extends Controller
     public function addAction(Request $request)
     {
         $json = $request->getContent();
+        $user = $this->getUser();
 
         if (empty($json)) {
             throw new ContactUnprocessableEntityHttpException();
@@ -116,7 +117,11 @@ class ContactController extends Controller
             'json'
         );
 
-        $this->_contactService->createContact($contactDto);
+        $contactId = $this->_contactService->createContact($contactDto, $user);
+
+        foreach ($contactDto->getPhones() as $phoneDto) {
+            $this->_phoneService->createPhone($phoneDto, $contactId);
+        }
 
         $json = $this->_serializer->serialize($contactDto, 'json');
         return new Response(
