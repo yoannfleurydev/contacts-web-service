@@ -3,9 +3,9 @@
 /**
  * File for the contact service. Use this class to return DTO from entities from
  * database.
- * 
+ *
  * PHP version 7.1
- * 
+ *
  * @category Contact
  * @package  ContactBundle\Service
  * @author   Yoann Fleury <yoann.fleury@yahoo.com>
@@ -25,7 +25,7 @@ use ContactBundle\Exception\ContactNotFoundException;
 /**
  * Contact service. Use this class to return DTO from entities from
  * database.
- * 
+ *
  * @category Contact
  * @package  ContactBundle\Service
  * @author   Yoann Fleury <yoann.fleury@yahoo.com>
@@ -70,6 +70,9 @@ class ContactService
             ->getRepository('ContactBundle:Contact');
     }
 
+    /**
+     * @return ContactDto a contact DTO
+     */
     public function get($id): ContactDto
     {
         $contacts = $this->_contactRepository->findOneById($id);
@@ -110,6 +113,9 @@ class ContactService
     {
         $contactEntity = ContactAssembler::dtoToEntity($contact, $user);
 
+        foreach($contactEntity->getPhones() as $phone) {
+            $phone->setContact($contactEntity);
+        }
 
         $this->_entityManager->persist($contactEntity);
         $this->_entityManager->flush();

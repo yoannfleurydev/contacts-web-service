@@ -83,7 +83,9 @@ class ContactController extends Controller
      */
     public function getAllAction()
     {
-        $contacts = $this->_contactService->getAllContactsById($this->getUser()->getId());
+        $contacts = $this->_contactService->getAllContactsById(
+            $this->getUser()->getId()
+        );
         return new Response(
             $this->_serializer->serialize($contacts, 'json'),
             Response::HTTP_OK,
@@ -119,10 +121,6 @@ class ContactController extends Controller
 
         $contactId = $this->_contactService->createContact($contactDto, $user);
 
-        foreach ($contactDto->getPhones() as $phoneDto) {
-            $this->_phoneService->createPhone($phoneDto, $contactId);
-        }
-
         $json = $this->_serializer->serialize($contactDto, 'json');
         return new Response(
             $json,
@@ -155,7 +153,8 @@ class ContactController extends Controller
     /**
      * Route to add a phone number to a contact.
      *
-     * @param integer $id
+     * @param Request $request The request to get the phone to add to a contact.
+     * @param string  $id      The identifier of the contact.
      *
      * @Route("/contacts/{id}/phones", requirements={"id": "\d+"})
      *

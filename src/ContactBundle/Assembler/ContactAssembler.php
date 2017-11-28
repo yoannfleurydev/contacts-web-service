@@ -31,8 +31,9 @@ class ContactAssembler
             ->setCompany($dto->getCompany())
             ->setWebsite($dto->getWebsite())
             ->setNote($dto->getNote())
+            ->setPhones(PhoneAssembler::dtosToEntities($dto->getPhones()))
             ->setUser($user);
-        
+
         return $contact;
     }
 
