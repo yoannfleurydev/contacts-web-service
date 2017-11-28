@@ -41,18 +41,13 @@ twig:
 
 # Doctrine Configuration
 doctrine:
-#    dbal:
-#        driver: pdo_mysql
-#        host: '%database_host%'
-#        port: '%database_port%'
-#        dbname: '%database_name%'
-#        user: '%database_user%'
-#        password: '%database_password%'
-#        charset: UTF8
-
     dbal:
-        driver: pdo_sqlite
-        path: '%kernel.project_dir%/app/sqlite.db'
+        driver: pdo_mysql
+        host: '%database_host%'
+        port: '%database_port%'
+        dbname: '%database_name%'
+        user: '%database_user%'
+        password: '%database_password%'
         charset: UTF8
 
     orm:
@@ -90,3 +85,14 @@ lexik_jwt_authentication:
     public_key_path:  '%jwt_public_key_path%'
     pass_phrase:      '%jwt_key_pass_phrase%'
     token_ttl:        '%jwt_token_ttl%'
+
+nelmio_api_doc:
+    routes:
+        path_patterns:
+            - ^/users
+            - ^/contacts
+    documentation:
+        info:
+            title: Contacts
+            description: Contacts is an application to manage contacts.
+            version: 1.0.0

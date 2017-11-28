@@ -95,10 +95,11 @@ class ContactService
      *
      * @return ContactDto[]
      */
-    public function getAllContactsById($id)
+    public function getAllContactsById($user)
     {
-        $contacts = $this->_contactRepository->findAllById($id);
-        return ContactAssembler::entitiesToDtos($contacts);
+        return ContactAssembler::entitiesToDtos(
+            $this->_contactRepository->findByUser($user)
+        );
     }
 
     /**
@@ -107,9 +108,9 @@ class ContactService
      * @param ContactDto $contact The contact
      * @param User $user
      *
-     * @return int
+     * @return string
      */
-    public function createContact(ContactDto $contact, User $user): int
+    public function createContact(ContactDto $contact, User $user): string
     {
         $contactEntity = ContactAssembler::dtoToEntity($contact, $user);
 

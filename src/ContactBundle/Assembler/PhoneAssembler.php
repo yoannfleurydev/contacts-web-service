@@ -41,8 +41,11 @@ class PhoneAssembler
     public static function dtosToEntities($dtos)
     {
         $entities = [];
-        foreach ($dtos as $dto) {
-            $entities[] = self::dtoToEntity($dto);
+
+        if ($dtos) {
+            foreach ($dtos as $dto) {
+                $entities[] = self::dtoToEntity($dto);
+            }
         }
 
         return $entities;

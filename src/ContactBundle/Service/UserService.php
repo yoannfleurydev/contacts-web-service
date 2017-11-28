@@ -75,8 +75,9 @@ class UserService
         $userEntity = UserAssembler::dtoToEntity($user);
 
         $plainPassword = $userEntity->getPassword();
-        $encoded = $this->_encoder->encodePassword($userEntity, $plainPassword);
-        $userEntity->setPassword($encoded);
+        $userEntity->setPassword(
+            $this->_encoder->encodePassword($userEntity, $plainPassword)
+        );
 
         $this->_entityManager->persist($userEntity);
         $this->_entityManager->flush();

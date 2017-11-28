@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class ContactNotFoundException
- * 
+ *
  * @package ContactBundle\Exception
  */
 class ContactNotFoundException extends HttpException
@@ -20,8 +20,8 @@ class ContactNotFoundException extends HttpException
      * @param int        $code     The internal exception code
      */
     public function __construct(
-        $message = "Contact not found", 
-        \Exception $previous = null, 
+        $message = "Contact not found",
+        \Exception $previous = null,
         $code = 1
     ) {
         parent::__construct(

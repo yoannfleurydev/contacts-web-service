@@ -26,12 +26,13 @@ security:
                 require_previous_session: false
 
         api:
-            pattern:   ^/(?!users|_profiler)
+            pattern:   ^/(?!users|_profiler|api\/doc)
             stateless: true
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
 
     access_control:
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/,      roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/login,   roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/,        roles: IS_AUTHENTICATED_FULLY       }
+        - { path: ^/api/doc, roles: IS_AUTHENTICATED_ANONYMOUSLY }

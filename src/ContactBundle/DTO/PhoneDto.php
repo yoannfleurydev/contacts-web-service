@@ -32,7 +32,7 @@ class PhoneDto
      *
      * @var int
      *
-     * @Type("integer")
+     * @Type("string")
      */
     private $id;
 
@@ -72,11 +72,11 @@ class PhoneDto
     }
 
     /**
-     * Set number
+     * Set the phone number
      *
      * @param string $number The number of the phone.
      *
-     * @return Phone
+     * @return Phone The current phone instance
      */
     public function setNumber($number)
     {
@@ -86,9 +86,9 @@ class PhoneDto
     }
 
     /**
-     * Get number
+     * Get the number of the phone
      *
-     * @return string
+     * @return string The phone number
      */
     public function getNumber()
     {
@@ -96,11 +96,11 @@ class PhoneDto
     }
 
     /**
-     * Set type
+     * Set the type of the phone
      *
      * @param integer $type The type of the phone.
      *
-     * @return Phone
+     * @return Phone The current instance.
      */
     public function setType($type)
     {
@@ -110,9 +110,9 @@ class PhoneDto
     }
 
     /**
-     * Get type
+     * Get the type of the phone
      *
-     * @return int
+     * @return string The type of the phone
      */
     public function getType()
     {

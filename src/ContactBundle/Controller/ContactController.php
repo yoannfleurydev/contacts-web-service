@@ -83,9 +83,8 @@ class ContactController extends Controller
      */
     public function getAllAction()
     {
-        $contacts = $this->_contactService->getAllContactsById(
-            $this->getUser()->getId()
-        );
+        $contacts = $this->_contactService->getAllContactsById($this->getUser());
+
         return new Response(
             $this->_serializer->serialize($contacts, 'json'),
             Response::HTTP_OK,
@@ -156,7 +155,7 @@ class ContactController extends Controller
      * @param Request $request The request to get the phone to add to a contact.
      * @param string  $id      The identifier of the contact.
      *
-     * @Route("/contacts/{id}/phones", requirements={"id": "\d+"})
+     * @Route("/contacts/{id}/phones")
      *
      * @return Response The response with a 201 CREATED if everything is good or
      *                  an error instead.

@@ -11,15 +11,15 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * Class ExceptionListener
- * 
+ *
  * @package ContactBundle\Listener
- * 
+ *
  */
 class ExceptionListener
 {
     /**
      * The logger to log the exception.
-     * 
+     *
      * @var Logger
      */
     private $_logger;
@@ -39,7 +39,7 @@ class ExceptionListener
         $this->_logger = $logger;
         $this->_serializer = $serializer;
     }
-    
+
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
         $exception = $event->getException();
@@ -54,8 +54,8 @@ class ExceptionListener
 
             $event->setResponse(
                 new Response(
-                    $this->_serializer->serialize($exception->getMessage(), 'json'), 
-                    $exception->getStatusCode(), 
+                    $this->_serializer->serialize($exception->getMessage(), 'json'),
+                    $exception->getStatusCode(),
                     ['Content-Type' => 'application/json']
                 )
             );
