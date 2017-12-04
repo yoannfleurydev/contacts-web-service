@@ -24,7 +24,7 @@ class PhoneAssembler
 
         $phoneEntity->setNumber($phoneDto->getNumber())
             ->setType($phoneDto->getType());
-        
+
         return $phoneEntity;
     }
 
@@ -37,4 +37,18 @@ class PhoneAssembler
 
         return $dtos;
     }
+
+    public static function dtosToEntities($dtos)
+    {
+        $entities = [];
+
+        if ($dtos) {
+            foreach ($dtos as $dto) {
+                $entities[] = self::dtoToEntity($dto);
+            }
+        }
+
+        return $entities;
+    }
+
 }

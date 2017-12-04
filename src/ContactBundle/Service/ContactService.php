@@ -3,9 +3,9 @@
 /**
  * File for the contact service. Use this class to return DTO from entities from
  * database.
- * 
+ *
  * PHP version 7.1
- * 
+ *
  * @category Contact
  * @package  ContactBundle\Service
  * @author   Yoann Fleury <yoann.fleury@yahoo.com>
@@ -14,6 +14,7 @@
  */
 namespace ContactBundle\Service;
 
+use ContactBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Monolog\Logger;
 
@@ -24,7 +25,7 @@ use ContactBundle\Exception\ContactNotFoundException;
 /**
  * Contact service. Use this class to return DTO from entities from
  * database.
- * 
+ *
  * @category Contact
  * @package  ContactBundle\Service
  * @author   Yoann Fleury <yoann.fleury@yahoo.com>
@@ -69,6 +70,9 @@ class ContactService
             ->getRepository('ContactBundle:Contact');
     }
 
+    /**
+     * @return ContactDto a contact DTO
+     */
     public function get($id): ContactDto
     {
         $contacts = $this->_contactRepository->findOneById($id);
@@ -87,20 +91,37 @@ class ContactService
     }
 
     /**
+     * Get all the contact as DTO.
+     *
+     * @return ContactDto[]
+     */
+    public function getAllContactsById($user)
+    {
+        return ContactAssembler::entitiesToDtos(
+            $this->_contactRepository->findByUser($user)
+        );
+    }
+
+    /**
      * Method to create a contact from a DTO.
      *
      * @param ContactDto $contact The contact
-     * 
-     * @return void
+     * @param User $user
+     *
+     * @return string
      */
-    public function createContact(ContactDto $contact): void
+    public function createContact(ContactDto $contact, User $user): string
     {
-        $contactEntity = ContactAssembler::dtoToEntity($contact);
+        $contactEntity = ContactAssembler::dtoToEntity($contact, $user);
+
+        foreach($contactEntity->getPhones() as $phone) {
+            $phone->setContact($contactEntity);
+        }
 
         $this->_entityManager->persist($contactEntity);
         $this->_entityManager->flush();
 
-        $contact->setId($contactEntity->getId());
+        return $contactEntity->getId();
     }
 
     public function deleteContact($id): void

@@ -3,9 +3,9 @@
 /**
  * File for the phone service. Use this class to return DTO from entities from
  * database.
- * 
+ *
  * PHP version 7.1
- * 
+ *
  * @category Phone
  * @package  ContactBundle\Service
  * @author   Yoann Fleury <yoann.fleury@yahoo.com>
@@ -23,7 +23,7 @@ use ContactBundle\DTO\PhoneDto;
 /**
  * Phone service. Use this class to return DTO from entities from
  * database.
- * 
+ *
  * @category Phone
  * @package  ContactBundle\Service
  * @author   Yoann Fleury <yoann.fleury@yahoo.com>
@@ -82,14 +82,14 @@ class PhoneService
      *
      * @param Phone $phone The phone
      * @param integer $id The identifier of the contact.
-     * 
+     *
      * @return void
      */
     public function createPhone(PhoneDto $phone, $id): void
     {
         $phoneEntity = PhoneAssembler::dtoToEntity($phone);
         $contactEntity = $this->_contactRepository->findOneById($id);
-        
+
         if ($contactEntity === null) {
             throw new ContactNotFoundException();
         }

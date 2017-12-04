@@ -22,7 +22,7 @@ class ContactAssembler
         return $dto;
     }
 
-    public static function dtoToEntity($dto)
+    public static function dtoToEntity($dto, $user)
     {
         $contact = new Contact();
 
@@ -30,8 +30,10 @@ class ContactAssembler
             ->setLastName($dto->getLastName())
             ->setCompany($dto->getCompany())
             ->setWebsite($dto->getWebsite())
-            ->setNote($dto->getNote());
-        
+            ->setNote($dto->getNote())
+            ->setPhones(PhoneAssembler::dtosToEntities($dto->getPhones()))
+            ->setUser($user);
+
         return $contact;
     }
 

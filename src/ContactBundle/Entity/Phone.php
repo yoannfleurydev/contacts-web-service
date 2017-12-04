@@ -2,9 +2,9 @@
 /**
  * File for the phone entity. This entity represents the phone number using
  * a number and a type.
- * 
+ *
  * PHP version 7.1
- * 
+ *
  * @category Contact
  * @package  ContactBundle\Entity
  * @author   Yoann Fleury <yoann.fleury@yahoo.com>
@@ -21,7 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="phone")
  * @ORM\Entity(repositoryClass="ContactBundle\Repository\PhoneRepository")
- * 
+ *
  * @category Contact
  * @package  ContactBundle\Entity
  * @author   Yoann Fleury <yoann.fleury@yahoo.com>
@@ -32,28 +32,27 @@ class Phone
 {
     /**
      * The identifier of the phone.
-     * 
+     *
      * @var int
      *
-     * @ORM\Column(name="id",type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="id", type="guid")
+     * @ORM\GeneratedValue(strategy="UUID")
      */
     private $id;
 
     /**
      * The number of the phone.
-     * 
+     *
      * @var string
      *
-     * @ORM\Column(name="number", type="string", length=255, nullable=true,
-     *             unique=true)
+     * @ORM\Column(name="number", type="string", length=255, nullable=true)
      */
     private $number;
 
     /**
      * The type of the phone number.
-     * 
+     *
      * @var int
      *
      * @ORM\Column(name="type", type="string", length=255)
@@ -131,7 +130,7 @@ class Phone
      * Set the contact that is the owner of the phone number.
      *
      * @param Contact $contact The contact owner of the phone number.
-     * 
+     *
      * @return Phone The current phone.
      */
     public function setContact(Contact $contact): Phone

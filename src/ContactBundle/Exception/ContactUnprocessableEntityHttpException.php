@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class ContactUnprocessableEntityHttpException
- * 
+ *
  * @package ContactBundle\Exception
  */
 class ContactUnprocessableEntityHttpException extends HttpException
@@ -20,8 +20,8 @@ class ContactUnprocessableEntityHttpException extends HttpException
      * @param int        $code     The internal exception code
      */
     public function __construct(
-        $message = "Contact unprocessable", 
-        \Exception $previous = null, 
+        $message = "Contact unprocessable",
+        \Exception $previous = null,
         $code = 2
     ) {
         parent::__construct(

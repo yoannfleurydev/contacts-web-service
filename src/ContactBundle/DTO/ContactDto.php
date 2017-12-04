@@ -32,7 +32,7 @@ class ContactDto
      *
      * @var int The identifier of the contact.
      *
-     * @Type("integer")
+     * @Type("string")
      */
     private $id;
 

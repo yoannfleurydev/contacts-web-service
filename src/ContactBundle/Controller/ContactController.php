@@ -83,7 +83,8 @@ class ContactController extends Controller
      */
     public function getAllAction()
     {
-        $contacts = $this->_contactService->getAllContacts();
+        $contacts = $this->_contactService->getAllContactsById($this->getUser());
+
         return new Response(
             $this->_serializer->serialize($contacts, 'json'),
             Response::HTTP_OK,
@@ -105,6 +106,7 @@ class ContactController extends Controller
     public function addAction(Request $request)
     {
         $json = $request->getContent();
+        $user = $this->getUser();
 
         if (empty($json)) {
             throw new ContactUnprocessableEntityHttpException();
@@ -116,7 +118,7 @@ class ContactController extends Controller
             'json'
         );
 
-        $this->_contactService->createContact($contactDto);
+        $contactId = $this->_contactService->createContact($contactDto, $user);
 
         $json = $this->_serializer->serialize($contactDto, 'json');
         return new Response(
@@ -150,9 +152,10 @@ class ContactController extends Controller
     /**
      * Route to add a phone number to a contact.
      *
-     * @param integer $id
+     * @param Request $request The request to get the phone to add to a contact.
+     * @param string  $id      The identifier of the contact.
      *
-     * @Route("/contacts/{id}/phones", requirements={"id": "\d+"})
+     * @Route("/contacts/{id}/phones")
      *
      * @return Response The response with a 201 CREATED if everything is good or
      *                  an error instead.

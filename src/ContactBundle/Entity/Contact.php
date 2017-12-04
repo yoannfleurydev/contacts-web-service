@@ -35,9 +35,9 @@ class Contact
      *
      * @var int The identifier of the contact.
      *
-     * @ORM\Column(name="id",type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="id", type="guid")
+     * @ORM\GeneratedValue(strategy="UUID")
      */
     private $id;
 
@@ -91,9 +91,38 @@ class Contact
      *
      * @var Phone[]
      *
-     * @ORM\OneToMany(targetEntity="Phone", mappedBy="contact")
+     * @ORM\OneToMany(targetEntity="Phone", mappedBy="contact",
+     *                cascade={"persist", "remove"})
      */
     private $phones;
+
+    /**
+     * The user that owns the contact.
+     *
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="contacts")
+     */
+    private $user;
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     * @return Contact
+     */
+    public function setUser(User $user): Contact
+    {
+        $this->user = $user;
+
+        return $this;
+    }
 
     /**
      * Get id
@@ -238,10 +267,17 @@ class Contact
         $phone->setContact($this);
     }
 
+    public function setPhones($phones)
+    {
+        $this->phones = $phones;
+
+        return $this;
+    }
+
     /**
      * Get the phones for the current contact.
      *
-     * @return Phone[] An array with phone numbers in it. 
+     * @return Phone[] An array with phone numbers in it
      */
     public function getPhones()
     {

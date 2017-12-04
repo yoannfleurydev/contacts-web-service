@@ -11,3 +11,11 @@ services:
     contact.service.phone:
         class: ContactBundle\Service\PhoneService
         arguments: ["@logger", "@doctrine.orm.entity_manager"]
+    contact.service.user:
+        class: ContactBundle\Service\UserService
+        arguments: ["@logger", "@doctrine.orm.entity_manager", "@security.password_encoder"]
+    acme_api.event.jwt_created_listener:
+        class: ContactBundle\EventListener\JWTCreatedListener
+        arguments: [ "@request_stack", "@doctrine.orm.entity_manager" ]
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
