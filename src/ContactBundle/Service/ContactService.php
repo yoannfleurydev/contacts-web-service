@@ -100,8 +100,15 @@ class ContactService
      */
     public function getContactByUser($id, $user)
     {
+        $contact = $this->_contactRepository
+            ->findOneBy(['id' => $id, 'user' => $user]);
+
+        if ($contact === null) {
+            throw new ContactNotFoundHttpException();
+        }
+
         return ContactAssembler::entityToDto(
-            $this->_contactRepository->findOneByIdAndUser($id, $user)
+            $contact
         );
     }
 

@@ -83,7 +83,7 @@ class ContactController extends Controller
      */
     public function getAllAction()
     {
-        $contacts = $this->_contactService->getAllContactsById($this->getUser());
+        $contacts = $this->_contactService->getAllContactsByUser($this->getUser());
 
         return new Response(
             $this->_serializer->serialize($contacts, 'json'),
@@ -106,7 +106,7 @@ class ContactController extends Controller
     {
         return new Response(
             $this->_serializer->serialize(
-                $this->_contactService->get($id, $this->getUser()),
+                $this->_contactService->getContactByUser($id, $this->getUser()),
                 'json'
             ),
             Response::HTTP_OK,
