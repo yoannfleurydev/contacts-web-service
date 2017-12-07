@@ -19,6 +19,7 @@ use Symfony\Bridge\Monolog\Logger;
 
 use ContactBundle\Assembler\PhoneAssembler;
 use ContactBundle\DTO\PhoneDto;
+use ContactBundle\Exception\ContactNotFoundHttpException;
 
 /**
  * Phone service. Use this class to return DTO from entities from
@@ -88,10 +89,11 @@ class PhoneService
     public function createPhone(PhoneDto $phone, $id): void
     {
         $phoneEntity = PhoneAssembler::dtoToEntity($phone);
+        $phoneEntity->setType(strtolower($phoneEntity->getType()));
         $contactEntity = $this->_contactRepository->findOneById($id);
 
         if ($contactEntity === null) {
-            throw new ContactNotFoundException();
+            throw new ContactNotFoundHttpException();
         }
 
         $contactEntity->addPhone($phoneEntity);
