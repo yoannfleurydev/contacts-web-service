@@ -20,7 +20,7 @@ use Symfony\Bridge\Monolog\Logger;
 
 use ContactBundle\Assembler\ContactAssembler;
 use ContactBundle\DTO\ContactDto;
-use ContactBundle\Exception\ContactNotFoundException;
+use ContactBundle\Exception\ContactNotFoundHttpException;
 
 /**
  * Contact service. Use this class to return DTO from entities from
@@ -129,7 +129,7 @@ class ContactService
         $contactEntity = $this->_contactRepository->findOneById($id);
 
         if ($contactEntity === null) {
-            throw new ContactNotFoundException();
+            throw new ContactNotFoundHttpException();
         }
 
         $this->_entityManager->remove($contactEntity);

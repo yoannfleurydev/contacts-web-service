@@ -133,7 +133,7 @@ class ContactController extends Controller
      *
      * @param integer $id The identifier of the contact to remove.
      *
-     * @Route("/contacts/{id}", requirements={"id": "\d+"})
+     * @Route("/contacts/{id}")
      *
      * @return Response The response with a 204 NO CONTENT if everything is good
      *                  or an error instead.

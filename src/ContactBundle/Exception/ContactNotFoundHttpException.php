@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @package ContactBundle\Exception
  */
-class ContactNotFoundException extends HttpException
+class ContactNotFoundHttpException extends HttpException
 {
     /**
      * Constructor.

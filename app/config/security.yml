@@ -26,7 +26,7 @@ security:
                 require_previous_session: false
 
         api:
-            pattern:   ^/(?!users|_profiler|api\/doc)
+            pattern:   ^/(?!users|_profiler)
             stateless: true
             guard:
                 authenticators:
@@ -35,4 +35,3 @@ security:
     access_control:
         - { path: ^/login,   roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/,        roles: IS_AUTHENTICATED_FULLY       }
-        - { path: ^/api/doc, roles: IS_AUTHENTICATED_ANONYMOUSLY }

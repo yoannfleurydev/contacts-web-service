@@ -5,7 +5,3 @@ contact:
 
 api_login_check:
     path: /login
-
-app.swagger_ui:
-    resource: "@NelmioApiDocBundle/Resources/config/routing/swaggerui.xml"
-    prefix:   /api/doc
