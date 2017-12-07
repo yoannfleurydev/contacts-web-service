@@ -93,6 +93,28 @@ class ContactController extends Controller
     }
 
     /**
+     * Expose a contact entity
+     * 
+     * @param string $id The identifier for the contact to get
+     * 
+     * @Route("/contacts/{id}")
+     * @Method({"GET"})
+     * 
+     * @return Response
+     */
+    public function getAction($id)
+    {
+        return new Response(
+            $this->_serializer->serialize(
+                $this->_contactService->get($id, $this->getUser()),
+                'json'
+            ),
+            Response::HTTP_OK,
+            ['Content-Type' => 'application/json']
+        );
+    }
+
+    /**
      * Route to add contacts. Send JSON with the correct data to add
      * a \ContactBundle\Entity\Contact.
      *

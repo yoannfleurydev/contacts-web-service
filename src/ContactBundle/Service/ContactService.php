@@ -91,11 +91,26 @@ class ContactService
     }
 
     /**
+     * Get the contact that match the given identifier.
+     *
+     * @param string $id   The identifier
+     * @param User   $user The user, owner of the contact
+     * 
+     * @return ContactDto The contact that matches with the given identifier.
+     */
+    public function getContactByUser($id, $user)
+    {
+        return ContactAssembler::entityToDto(
+            $this->_contactRepository->findOneByIdAndUser($id, $user)
+        );
+    }
+
+    /**
      * Get all the contact as DTO.
      *
      * @return ContactDto[]
      */
-    public function getAllContactsById($user)
+    public function getAllContactsByUser($user)
     {
         return ContactAssembler::entitiesToDtos(
             $this->_contactRepository->findByUser($user)
