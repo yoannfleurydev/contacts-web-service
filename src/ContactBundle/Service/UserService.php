@@ -7,8 +7,11 @@ use Symfony\Bridge\Monolog\Logger;
 
 use ContactBundle\Assembler\UserAssembler;
 use ContactBundle\DTO\UserDto;
+use ContactBundle\Exception\UserConflictHttpException;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 
 class UserService
@@ -79,8 +82,12 @@ class UserService
             $this->_encoder->encodePassword($userEntity, $plainPassword)
         );
 
-        $this->_entityManager->persist($userEntity);
-        $this->_entityManager->flush();
+        try {
+            $this->_entityManager->persist($userEntity);
+            $this->_entityManager->flush();
+        } catch (UniqueConstraintViolationException $ucve) {
+            throw new UserConflictHttpException();
+        }
 
         $user->setId($userEntity->getId());
     }
