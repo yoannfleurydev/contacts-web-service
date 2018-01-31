@@ -26,6 +26,15 @@ class UserDto
      */
     private $password;
 
+    /**
+     * @Type("string")
+     */
+    private $avatar;
+
+    /**
+     * @Type("string")
+     */
+    private $background;
 
     public function setId($id): UserDto
     {
@@ -85,5 +94,29 @@ class UserDto
     public function getPassword(): string
     {
         return $this->password;
+    }
+
+    public function setAvatar($avatar): UserDto
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getAvatar(): string
+    {
+        return $this->avatar;
+    }
+
+    public function setBackground($background): UserDto
+    {
+        $this->background = $background;
+
+        return $this;
+    }
+
+    public function getBackground(): string
+    {
+        return $this->background;
     }
 }

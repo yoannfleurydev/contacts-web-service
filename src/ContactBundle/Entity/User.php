@@ -12,6 +12,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface, \Serializable
 {
     /**
+     * Unique identifier of the user.
+     *
      * @ORM\Id
      * @ORM\Column(name="id", type="guid")
      * @ORM\GeneratedValue(strategy="UUID")
@@ -19,11 +21,15 @@ class User implements UserInterface, \Serializable
     private $id;
 
     /**
+     * The username of the user.
+     *
      * @ORM\Column(type="string", length=25, unique=true)
      */
     private $username;
 
     /**
+     * The BCrypt crypted password.
+     *
      * @ORM\Column(type="string", length=64)
      */
     private $password;
@@ -36,6 +42,21 @@ class User implements UserInterface, \Serializable
      * @ORM\OneToMany(targetEntity="Contact", mappedBy="user")
      */
     private $contacts;
+
+    /**
+     * Avatar of the user.
+     * 
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+    private $avatar;
+
+    /**
+     * Background of the user. It could be the favorite image of the user, or
+     * just the image of his choice.
+     *
+     * @var string Location of the background image.
+     */
+    private $background;
 
     /**
      * @return mixed
@@ -111,6 +132,53 @@ class User implements UserInterface, \Serializable
         $contacts->setUser($this);
     }
 
+    /**
+     * Get the avatar of the user
+     *
+     * @return string
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * Set the avatar of the user.
+     *
+     * @param string $avatar The location of the avatar
+     * 
+     * @return User return the user for fluent setters
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * Get the background of the user.
+     *
+     * @return string The background of the user.
+     */
+    public function getBackground()
+    {
+        return $this->background;
+    }
+
+    /**
+     * Set the background of the user.
+     *
+     * @param string $background the image to set.
+     * 
+     * @return User the user for fluent setters.
+     */
+    public function setBackground($background)
+    {
+        $this->background = $background;
+
+        return $this;
+    }
 
     /** @see \Serializable::serialize() */
     public function serialize()
@@ -124,7 +192,8 @@ class User implements UserInterface, \Serializable
         ));
     }
 
-    /** @see \Serializable::unserialize()
+    /** 
+     * @see \Serializable::unserialize()
      * @param string $serialized
      */
     public function unserialize($serialized)
