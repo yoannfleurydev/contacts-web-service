@@ -45,18 +45,20 @@ class User implements UserInterface, \Serializable
 
     /**
      * Avatar of the user.
-     * 
-     * @ORM\Column(type="string", length=255, unique=true)
+     *
+     * @ORM\Column(type="string", length=255)
      */
-    private $avatar;
+    private $avatar = "default.jpg";
 
     /**
      * Background of the user. It could be the favorite image of the user, or
      * just the image of his choice.
      *
+     * @ORM\Column(type="string", length=255)
+     *
      * @var string Location of the background image.
      */
-    private $background;
+    private $background = "default.jpg";
 
     /**
      * @return mixed
@@ -146,7 +148,7 @@ class User implements UserInterface, \Serializable
      * Set the avatar of the user.
      *
      * @param string $avatar The location of the avatar
-     * 
+     *
      * @return User return the user for fluent setters
      */
     public function setAvatar($avatar)
@@ -170,7 +172,7 @@ class User implements UserInterface, \Serializable
      * Set the background of the user.
      *
      * @param string $background the image to set.
-     * 
+     *
      * @return User the user for fluent setters.
      */
     public function setBackground($background)
@@ -192,7 +194,7 @@ class User implements UserInterface, \Serializable
         ));
     }
 
-    /** 
+    /**
      * @see \Serializable::unserialize()
      * @param string $serialized
      */

@@ -19,3 +19,10 @@
 /.idea/
 /app/config/config.yml
 /app/sqlite.db
+
+!/public/uploads/avatars
+/public/uploads/avatars/*
+!/public/uploads/avatars/.gitkeep
+!/public/uploads/backgrounds
+/public/uploads/backgrounds/*
+!/public/uploads/backgrounds/.gitkeep

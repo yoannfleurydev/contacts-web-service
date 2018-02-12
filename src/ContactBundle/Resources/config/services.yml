@@ -13,7 +13,7 @@ services:
         arguments: ["@logger", "@doctrine.orm.entity_manager"]
     contact.service.user:
         class: ContactBundle\Service\UserService
-        arguments: ["@logger", "@doctrine.orm.entity_manager", "@security.password_encoder"]
+        arguments: ["@logger", "@doctrine.orm.entity_manager", "@security.password_encoder", "%avatars_directory%", "%backgrounds_directory%"]
     acme_api.event.jwt_created_listener:
         class: ContactBundle\EventListener\JWTCreatedListener
         arguments: [ "@request_stack", "@doctrine.orm.entity_manager" ]

@@ -2,8 +2,9 @@
 
 POC using Symfony project.
 
-## Config
+## Configuration
 
+* Enable `php_fileinfo` extension in your `php.ini`.
 * Setup your Database connector in `app/config/config.yml`
 * Execute `composer intall`
 * Generate the SSH keys :
@@ -19,7 +20,7 @@ openssl rsa -pubout -in var/jwt/private.pem -out var/jwt/public.pem
 * Load DataFixtures if needed : `php bin/console doctrine:fixtures:load`
 * Launch server : `php bin/console server:run`
 
-## Author
+## Authors
 
 * Yoann Fleury <yoann.fleury@docapost-agility.fr>
 * Georges Buquet <georges.buquet@docapost-agility.fr>

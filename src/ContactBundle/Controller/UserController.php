@@ -2,6 +2,7 @@
 
 namespace ContactBundle\Controller;
 
+use ContactBundle\Assembler\UserAssembler;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,6 +67,37 @@ class UserController extends Controller
         return new Response(
             $json,
             Response::HTTP_CREATED,
+            ["Content-Type" => "application/json"]
+        );
+    }
+
+    /**
+     * Route to set the avatar of the user. Send multipart request with
+     * the file as field.
+     *
+     * @Route("/me/images")
+     * @Method({"POST"})
+     *
+     * @param Request $request
+     * @return Response The response
+     */
+    public function setMyImagesAction(Request $request)
+    {
+        $avatar = $request->files->get('avatar');
+        if (isset($avatar)) {
+            $this->_userService->setAvatar($avatar, $this->getUser());
+        }
+
+        $background = $request->files->get('background');
+        if (isset($background)) {
+           $this->_userService->setBackground($background, $this->getUser());
+        }
+
+        return new Response(
+            $this->_serializer->serialize(UserAssembler::entityToDto(
+                $this->getUser()
+            ), 'json'),
+            Response::HTTP_OK,
             ["Content-Type" => "application/json"]
         );
     }

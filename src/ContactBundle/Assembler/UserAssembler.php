@@ -13,9 +13,9 @@ class UserAssembler
 
         $dto->setId($entity->getId())
             ->setUsername($entity->getUsername())
-            ->setPassword($entity->getPassword());
-
-        var_dump($dto);
+            ->setPassword($entity->getPassword())
+            ->setAvatar($entity->getAvatar())
+            ->setBackground($entity->getBackground());
 
         return $dto;
     }
@@ -26,7 +26,7 @@ class UserAssembler
 
         $user->setUsername($dto->getUsername())
             ->setPassword($dto->getPassword());
-        
+
         return $user;
     }
 

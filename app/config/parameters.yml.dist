@@ -7,8 +7,6 @@ parameters:
     database_name: symfony
     database_user: root
     database_password: ~
-    # You should uncomment this if you want to use pdo_sqlite
-    #database_path: '%kernel.project_dir%/var/data/data.sqlite'
 
     mailer_transport: smtp
     mailer_host: 127.0.0.1
@@ -24,3 +22,6 @@ parameters:
     jwt_public_key_path:  '%kernel.root_dir%/../var/jwt/public.pem'  # ssh public key path
     jwt_key_pass_phrase:  ''                                         # ssh key pass phrase
     jwt_token_ttl:        3600
+
+    avatars_directory: '%kernel.project_dir%/public/uploads/avatars'
+    backgrounds_directory: '%kernel.project_dir%/public/uploads/backgrounds'
