@@ -10,8 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-class UserController extends Controller
-{
+class MeController extends Controller {
+
     /**
      * The serializer to transform DTO to JSON.
      *
@@ -42,31 +42,51 @@ class UserController extends Controller
     }
 
     /**
-     * Route to add user. Send JSON with the correct data to add
-     * a \ContactBundle\Entity\User.
+     * Route to set the avatar of the user. Send multipart request with
+     * the file as field.
      *
-     * @param Request $request The request send by the client.
-     *
-     * @Route("/users")
+     * @Route("/me/images")
      * @Method({"POST"})
      *
-     * @return Response
+     * @param Request $request
+     * @return Response The response
      */
-    public function addAction(Request $request)
+    public function setMyImagesAction(Request $request)
     {
-        $json = $request->getContent();
-        $userDto = $this->_serializer->deserialize(
-            $json,
-            'ContactBundle\DTO\UserDto',
-            'json'
-        );
+        $avatar = $request->files->get('avatar');
+        if (isset($avatar)) {
+            $this->_userService->setAvatar($avatar, $this->getUser());
+        }
 
-        $this->_userService->createUser($userDto);
+        $background = $request->files->get('background');
+        if (isset($background)) {
+           $this->_userService->setBackground($background, $this->getUser());
+        }
 
-        $json = $this->_serializer->serialize($userDto, 'json');
         return new Response(
-            $json,
-            Response::HTTP_CREATED,
+            $this->_serializer->serialize(UserAssembler::entityToDto(
+                $this->getUser()
+            ), 'json'),
+            Response::HTTP_OK,
+            ["Content-Type" => "application/json"]
+        );
+    }
+
+    /**
+     * Route to set the avatar of the user. Send multipart request with
+     * the file as field.
+     *
+     * @Route("/me")
+     * @Method({"GET"})
+     *
+     * @return Response The response that contains data about the current user.
+     */
+    public function meAction() {
+        return new Response(
+            $this->_serializer->serialize(UserAssembler::entityToDto(
+                $this->getUser()
+            ), 'json'),
+            Response::HTTP_OK,
             ["Content-Type" => "application/json"]
         );
     }
