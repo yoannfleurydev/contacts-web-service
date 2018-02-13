@@ -3,6 +3,7 @@
 namespace ContactBundle\Controller;
 
 use ContactBundle\Assembler\UserAssembler;
+use ContactBundle\Service\UserService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,13 +21,6 @@ class UserController extends Controller
     private $_serializer;
 
     /**
-     * The contact service to do the logic.
-     *
-     * @var \ContactBundle\Service\UserService
-     */
-    private $_userService;
-
-    /**
      * Override of the setContainer method from the Controller class.
      *
      * @param ContainerInterface $container The already existing container will
@@ -38,7 +32,6 @@ class UserController extends Controller
     {
         parent::setContainer($container);
         $this->_serializer = $this->get('jms_serializer');
-        $this->_userService = $this->get('contact.service.user');
     }
 
     /**
@@ -52,7 +45,7 @@ class UserController extends Controller
      *
      * @return Response
      */
-    public function addAction(Request $request)
+    public function addAction(Request $request, UserService $userService)
     {
         $json = $request->getContent();
         $userDto = $this->_serializer->deserialize(
@@ -61,7 +54,7 @@ class UserController extends Controller
             'json'
         );
 
-        $this->_userService->createUser($userDto);
+        $userService->createUser($userDto);
 
         $json = $this->_serializer->serialize($userDto, 'json');
         return new Response(

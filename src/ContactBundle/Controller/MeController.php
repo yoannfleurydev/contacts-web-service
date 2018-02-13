@@ -3,6 +3,7 @@
 namespace ContactBundle\Controller;
 
 use ContactBundle\Assembler\UserAssembler;
+use ContactBundle\Service\UserService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,13 +21,6 @@ class MeController extends Controller {
     private $_serializer;
 
     /**
-     * The contact service to do the logic.
-     *
-     * @var \ContactBundle\Service\UserService
-     */
-    private $_userService;
-
-    /**
      * Override of the setContainer method from the Controller class.
      *
      * @param ContainerInterface $container The already existing container will
@@ -38,7 +32,6 @@ class MeController extends Controller {
     {
         parent::setContainer($container);
         $this->_serializer = $this->get('jms_serializer');
-        $this->_userService = $this->get('contact.service.user');
     }
 
     /**
@@ -51,16 +44,16 @@ class MeController extends Controller {
      * @param Request $request
      * @return Response The response
      */
-    public function setMyImagesAction(Request $request)
+    public function setMyImagesAction(Request $request, UserService $userService)
     {
         $avatar = $request->files->get('avatar');
         if (isset($avatar)) {
-            $this->_userService->setAvatar($avatar, $this->getUser());
+            $userService->setAvatar($avatar, $this->getUser());
         }
 
         $background = $request->files->get('background');
         if (isset($background)) {
-           $this->_userService->setBackground($background, $this->getUser());
+           $userService->setBackground($background, $this->getUser());
         }
 
         return new Response(

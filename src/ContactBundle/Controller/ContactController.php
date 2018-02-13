@@ -22,6 +22,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use ContactBundle\Exception\ContactUnprocessableEntityHttpException;
 use ContactBundle\Exception\PhoneUnprocessableEntityHttpException;
+use ContactBundle\Service\ContactService;
+use ContactBundle\Service\PhoneService;
 
 /**
  * Contact controller.
@@ -44,20 +46,6 @@ class ContactController extends Controller
     private $_serializer;
 
     /**
-     * The contact service to do the logic.
-     *
-     * @var \ContactBundle\Service\ContactService
-     */
-    private $_contactService;
-
-    /**
-     * The phone service to do the logic.
-     *
-     * @var \ContactBundle\Service\PhoneService
-     */
-    private $_phoneService;
-
-    /**
      * Override of the setContainer method from the Controller class.
      *
      * @param ContainerInterface $container The already existing container will
@@ -69,8 +57,6 @@ class ContactController extends Controller
     {
         parent::setContainer($container);
         $this->_serializer = $this->get('jms_serializer');
-        $this->_contactService = $this->get('contact.service.contact');
-        $this->_phoneService = $this->get('contact.service.phone');
     }
 
     /**
@@ -81,9 +67,9 @@ class ContactController extends Controller
      *
      * @return Response
      */
-    public function getAllAction()
+    public function getAllAction(ContactService $contactService)
     {
-        $contacts = $this->_contactService->getAllContactsByUser($this->getUser());
+        $contacts = $contactService->getAllContactsByUser($this->getUser());
 
         return new Response(
             $this->_serializer->serialize($contacts, 'json'),
@@ -94,19 +80,19 @@ class ContactController extends Controller
 
     /**
      * Expose a contact entity
-     * 
+     *
      * @param string $id The identifier for the contact to get
-     * 
+     *
      * @Route("/contacts/{id}")
      * @Method({"GET"})
-     * 
+     *
      * @return Response
      */
-    public function getAction($id)
+    public function getAction($id, ContactService $contactService)
     {
         return new Response(
             $this->_serializer->serialize(
-                $this->_contactService->getContactByUser($id, $this->getUser()),
+                $contactService->getContactByUser($id, $this->getUser()),
                 'json'
             ),
             Response::HTTP_OK,
@@ -125,7 +111,7 @@ class ContactController extends Controller
      *
      * @return Response
      */
-    public function addAction(Request $request)
+    public function addAction(Request $request, ContactService $contactService)
     {
         $json = $request->getContent();
         $user = $this->getUser();
@@ -140,7 +126,7 @@ class ContactController extends Controller
             'json'
         );
 
-        $contactId = $this->_contactService->createContact($contactDto, $user);
+        $contactId = $contactService->createContact($contactDto, $user);
 
         $json = $this->_serializer->serialize($contactDto, 'json');
         return new Response(
@@ -160,9 +146,9 @@ class ContactController extends Controller
      * @return Response The response with a 204 NO CONTENT if everything is good
      *                  or an error instead.
      */
-    public function deleteAction($id)
+    public function deleteAction($id, ContactService $contactService)
     {
-        $this->_contactService->deleteContact($id);
+        $contactService->deleteContact($id);
 
         return new Response(
             '',
@@ -182,7 +168,7 @@ class ContactController extends Controller
      * @return Response The response with a 201 CREATED if everything is good or
      *                  an error instead.
      */
-    public function addPhoneAction(Request $request, $id)
+    public function addPhoneAction(Request $request, $id, ContactService $contactService, PhoneService $phoneService)
     {
         $json = $request->getContent();
 
@@ -196,8 +182,8 @@ class ContactController extends Controller
             'json'
         );
 
-        $this->_phoneService->createPhone($phoneDto, $id);
-        $contactDto = $this->_contactService->get($id);
+        $phoneService->createPhone($phoneDto, $id);
+        $contactDto = $contactService->get($id);
 
         return new Response(
             $this->_serializer->serialize($contactDto, 'json'),
