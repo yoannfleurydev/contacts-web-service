@@ -45,7 +45,7 @@ class UserController extends Controller
      *
      * @return Response
      */
-    public function addAction(Request $request, UserService $userService)
+    public function addAction(Request $request, UserService $userService, UserAssembler $userAssembler)
     {
         $json = $request->getContent();
         $userDto = $this->_serializer->deserialize(
@@ -54,7 +54,7 @@ class UserController extends Controller
             'json'
         );
 
-        $userService->createUser($userDto);
+        $userService->createUser($userAssembler->dtoToEntity($userDto));
 
         $json = $this->_serializer->serialize($userDto, 'json');
         return new Response(

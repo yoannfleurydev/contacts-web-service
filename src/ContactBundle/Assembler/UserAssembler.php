@@ -7,7 +7,7 @@ use ContactBundle\DTO\UserDto;
 
 class UserAssembler
 {
-    public static function entityToDto(User $entity)
+    public function entityToDto(User $entity)
     {
         $dto = new UserDto();
 
@@ -20,7 +20,7 @@ class UserAssembler
         return $dto;
     }
 
-    public static function dtoToEntity($dto)
+    public function dtoToEntity($dto)
     {
         $user = new User();
 
@@ -30,7 +30,7 @@ class UserAssembler
         return $user;
     }
 
-    public static function entitiesToDtos($entities)
+    public function entitiesToDtos($entities)
     {
         $dtos = [];
         foreach ($entities as $entity) {

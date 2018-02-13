@@ -86,10 +86,10 @@ class UserService
             ->getRepository('ContactBundle:User');
     }
 
-    public function get($id): UserDto
+    public function get($id): User
     {
         $user = $this->_userRepository->findOneById($id);
-        return UserAssembler::entityToDto($user);
+        return $user;
     }
 
     /**
@@ -98,23 +98,21 @@ class UserService
      * @param UserDto $user The user
      * @return void
      */
-    public function createUser(UserDto $user): void
+    public function createUser(User $user): void
     {
-        $userEntity = UserAssembler::dtoToEntity($user);
-
-        $plainPassword = $userEntity->getPassword();
-        $userEntity->setPassword(
-            $this->_encoder->encodePassword($userEntity, $plainPassword)
+        $plainPassword = $user->getPassword();
+        $user->setPassword(
+            $this->_encoder->encodePassword($user, $plainPassword)
         );
 
         try {
-            $this->_entityManager->persist($userEntity);
+            $this->_entityManager->persist($user);
             $this->_entityManager->flush();
         } catch (UniqueConstraintViolationException $ucve) {
             throw new UserConflictHttpException();
         }
 
-        $user->setId($userEntity->getId());
+        $user->setId($user->getId());
     }
 
     public function setAvatar(UploadedFile $avatar, $user)

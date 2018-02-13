@@ -11,7 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-class MeController extends Controller {
+class MeController extends Controller
+{
 
     /**
      * The serializer to transform DTO to JSON.
@@ -44,8 +45,11 @@ class MeController extends Controller {
      * @param Request $request
      * @return Response The response
      */
-    public function setMyImagesAction(Request $request, UserService $userService)
-    {
+    public function setMyImagesAction(
+        Request $request,
+        UserService $userService,
+        UserAssembler $userAssembler
+    ) {
         $avatar = $request->files->get('avatar');
         if (isset($avatar)) {
             $userService->setAvatar($avatar, $this->getUser());
@@ -57,7 +61,7 @@ class MeController extends Controller {
         }
 
         return new Response(
-            $this->_serializer->serialize(UserAssembler::entityToDto(
+            $this->_serializer->serialize($userAssembler->entityToDto(
                 $this->getUser()
             ), 'json'),
             Response::HTTP_OK,
@@ -74,9 +78,9 @@ class MeController extends Controller {
      *
      * @return Response The response that contains data about the current user.
      */
-    public function meAction() {
+    public function meAction(UserAssembler $userAssembler) {
         return new Response(
-            $this->_serializer->serialize(UserAssembler::entityToDto(
+            $this->_serializer->serialize($userAssembler->entityToDto(
                 $this->getUser()
             ), 'json'),
             Response::HTTP_OK,
