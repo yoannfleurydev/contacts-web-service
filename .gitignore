@@ -20,11 +20,11 @@
 /app/config/config.yml
 /app/sqlite.db
 
-!/public/uploads/avatars
-/public/uploads/avatars/*
-!/public/uploads/avatars/.gitkeep
-!/public/uploads/avatars/default.jpg
-!/public/uploads/backgrounds
-/public/uploads/backgrounds/*
-!/public/uploads/backgrounds/.gitkeep
-!/public/uploads/backgrounds/default.jpg
+!/web/public/uploads/avatars
+/web/public/uploads/avatars/*
+!/web/public/uploads/avatars/.gitkeep
+!/web/public/uploads/avatars/default.jpg
+!/web/public/uploads/backgrounds
+/web/public/uploads/backgrounds/*
+!/web/public/uploads/backgrounds/.gitkeep
+!/web/public/uploads/backgrounds/default.jpg
