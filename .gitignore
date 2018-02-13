@@ -23,6 +23,8 @@
 !/public/uploads/avatars
 /public/uploads/avatars/*
 !/public/uploads/avatars/.gitkeep
+!/public/uploads/avatars/default.jpg
 !/public/uploads/backgrounds
 /public/uploads/backgrounds/*
 !/public/uploads/backgrounds/.gitkeep
+!/public/uploads/backgrounds/default.jpg
