@@ -14,6 +14,7 @@
  */
 namespace ContactBundle\Service;
 
+use ContactBundle\Entity\Contact;
 use ContactBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Monolog\Logger;
@@ -95,7 +96,7 @@ class ContactService
      *
      * @param string $id   The identifier
      * @param User   $user The user, owner of the contact
-     * 
+     *
      * @return ContactDto The contact that matches with the given identifier.
      */
     public function getContactByUser($id, $user)
@@ -132,7 +133,7 @@ class ContactService
      *
      * @return string
      */
-    public function createContact(ContactDto $contact, User $user): string
+    public function createContact(ContactDto $contact, User $user): Contact
     {
         $contactEntity = ContactAssembler::dtoToEntity($contact, $user);
 
@@ -143,18 +144,12 @@ class ContactService
         $this->_entityManager->persist($contactEntity);
         $this->_entityManager->flush();
 
-        return $contactEntity->getId();
+        return $contactEntity;
     }
 
-    public function deleteContact($id): void
+    public function deleteContact(Contact $contact): void
     {
-        $contactEntity = $this->_contactRepository->findOneById($id);
-
-        if ($contactEntity === null) {
-            throw new ContactNotFoundHttpException();
-        }
-
-        $this->_entityManager->remove($contactEntity);
+        $this->_entityManager->remove($contact);
         $this->_entityManager->flush();
     }
 }

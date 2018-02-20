@@ -7,7 +7,7 @@ use ContactBundle\DTO\PhoneDto;
 
 class PhoneAssembler
 {
-    public static function entityToDto(Phone $phoneEntity)
+    public function entityToDto(Phone $phoneEntity)
     {
         $phoneDto = new PhoneDto();
 
@@ -18,7 +18,7 @@ class PhoneAssembler
         return $phoneDto;
     }
 
-    public static function dtoToEntity($phoneDto): Phone
+    public function dtoToEntity($phoneDto): Phone
     {
         $phoneEntity = new Phone();
 
@@ -28,7 +28,7 @@ class PhoneAssembler
         return $phoneEntity;
     }
 
-    public static function entitiesToDtos($entities)
+    public function entitiesToDtos($entities)
     {
         $dtos = [];
         foreach ($entities as $entity) {
@@ -38,7 +38,7 @@ class PhoneAssembler
         return $dtos;
     }
 
-    public static function dtosToEntities($dtos)
+    public function dtosToEntities($dtos)
     {
         $entities = [];
 

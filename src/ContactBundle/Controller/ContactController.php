@@ -20,6 +20,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+use ContactBundle\Assembler\ContactAssembler;
+use ContactBundle\Entity\Contact;
 use ContactBundle\Exception\ContactUnprocessableEntityHttpException;
 use ContactBundle\Exception\PhoneUnprocessableEntityHttpException;
 use ContactBundle\Service\ContactService;
@@ -67,7 +69,7 @@ class ContactController extends Controller
      *
      * @return Response
      */
-    public function getAllAction(ContactService $contactService)
+    public function readAllAction(ContactService $contactService)
     {
         $contacts = $contactService->getAllContactsByUser($this->getUser());
 
@@ -88,11 +90,11 @@ class ContactController extends Controller
      *
      * @return Response
      */
-    public function getAction($id, ContactService $contactService)
+    public function readAction(Contact $contact, ContactAssembler $contactAssembler)
     {
         return new Response(
             $this->_serializer->serialize(
-                $contactService->getContactByUser($id, $this->getUser()),
+                $contactAssembler->entityToDto($contact),
                 'json'
             ),
             Response::HTTP_OK,
@@ -111,22 +113,24 @@ class ContactController extends Controller
      *
      * @return Response
      */
-    public function addAction(Request $request, ContactService $contactService)
-    {
+    public function createAction(
+        Request $request,
+        ContactService $contactService,
+        ContactAssembler $contactAssembler
+    ) {
         $json = $request->getContent();
-        $user = $this->getUser();
 
         if (empty($json)) {
             throw new ContactUnprocessableEntityHttpException();
         }
 
         $contactDto = $this->_serializer->deserialize(
-            $json,
-            'ContactBundle\DTO\ContactDto',
-            'json'
+            $json, 'ContactBundle\DTO\ContactDto', 'json'
         );
 
-        $contactId = $contactService->createContact($contactDto, $user);
+        $contactDto = $contactAssembler->entityToDto(
+            $contactService->createContact($contactDto, $this->getUser())
+        );
 
         $json = $this->_serializer->serialize($contactDto, 'json');
         return new Response(
@@ -146,9 +150,9 @@ class ContactController extends Controller
      * @return Response The response with a 204 NO CONTENT if everything is good
      *                  or an error instead.
      */
-    public function deleteAction($id, ContactService $contactService)
+    public function deleteAction(Contact $contact, ContactService $contactService)
     {
-        $contactService->deleteContact($id);
+        $contactService->deleteContact($contact);
 
         return new Response(
             '',

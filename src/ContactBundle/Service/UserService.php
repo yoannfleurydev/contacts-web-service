@@ -7,6 +7,7 @@ use Symfony\Bridge\Monolog\Logger;
 
 use ContactBundle\Assembler\UserAssembler;
 use ContactBundle\DTO\UserDto;
+use ContactBundle\Entity\User;
 use ContactBundle\Exception\UserConflictHttpException;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
