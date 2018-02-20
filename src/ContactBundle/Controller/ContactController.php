@@ -14,7 +14,6 @@
 namespace ContactBundle\Controller;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -24,6 +23,7 @@ use ContactBundle\Assembler\ContactAssembler;
 use ContactBundle\Entity\Contact;
 use ContactBundle\Exception\ContactUnprocessableEntityHttpException;
 use ContactBundle\Exception\PhoneUnprocessableEntityHttpException;
+use ContactBundle\HttpFoundation\JsonResponse;
 use ContactBundle\Service\ContactService;
 use ContactBundle\Service\PhoneService;
 
@@ -73,10 +73,8 @@ class ContactController extends Controller
     {
         $contacts = $contactService->getAllContactsByUser($this->getUser());
 
-        return new Response(
-            $this->_serializer->serialize($contacts, 'json'),
-            Response::HTTP_OK,
-            ["Content-Type" => "application/json"]
+        return JsonResponse::OK(
+            $this->_serializer->serialize($contacts, 'json')
         );
     }
 
@@ -88,17 +86,15 @@ class ContactController extends Controller
      * @Route("/contacts/{id}")
      * @Method({"GET"})
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function readAction(Contact $contact, ContactAssembler $contactAssembler)
     {
-        return new Response(
+        return JsonResponse::OK(
             $this->_serializer->serialize(
                 $contactAssembler->entityToDto($contact),
                 'json'
-            ),
-            Response::HTTP_OK,
-            ['Content-Type' => 'application/json']
+            )
         );
     }
 
@@ -111,7 +107,7 @@ class ContactController extends Controller
      * @Route("/contacts")
      * @Method({"POST"})
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function createAction(
         Request $request,
@@ -133,11 +129,7 @@ class ContactController extends Controller
         );
 
         $json = $this->_serializer->serialize($contactDto, 'json');
-        return new Response(
-            $json,
-            Response::HTTP_CREATED,
-            ["Content-Type" => "application/json"]
-        );
+        return JsonResponse::CREATED($json);
     }
 
     /**
@@ -147,18 +139,13 @@ class ContactController extends Controller
      *
      * @Route("/contacts/{id}")
      *
-     * @return Response The response with a 204 NO CONTENT if everything is good
-     *                  or an error instead.
+     * @return JsonResponse The response with a 204 NO CONTENT if everything is
+     *                      good or an error instead.
      */
     public function deleteAction(Contact $contact, ContactService $contactService)
     {
         $contactService->deleteContact($contact);
-
-        return new Response(
-            '',
-            Response::HTTP_NO_CONTENT,
-            ['Content-Type' => 'application/json']
-        );
+        return JsonResponse::NO_CONTENT();
     }
 
     /**
@@ -169,8 +156,8 @@ class ContactController extends Controller
      *
      * @Route("/contacts/{id}/phones")
      *
-     * @return Response The response with a 201 CREATED if everything is good or
-     *                  an error instead.
+     * @return JsonResponse The response with a 201 CREATED if everything is
+     *                      good or an error instead.
      */
     public function addPhoneAction(Request $request, $id, ContactService $contactService, PhoneService $phoneService)
     {
@@ -181,18 +168,14 @@ class ContactController extends Controller
         }
 
         $phoneDto = $this->_serializer->deserialize(
-            $json,
-            'ContactBundle\DTO\PhoneDto',
-            'json'
+            $json, 'ContactBundle\DTO\PhoneDto', 'json'
         );
 
         $phoneService->createPhone($phoneDto, $id);
         $contactDto = $contactService->get($id);
 
-        return new Response(
-            $this->_serializer->serialize($contactDto, 'json'),
-            Response::HTTP_CREATED,
-            ["Content-Type" => "application/json"]
+        return JsonResponse::CREATED(
+            $this->_serializer->serialize($contactDto, 'json')
         );
     }
 }
