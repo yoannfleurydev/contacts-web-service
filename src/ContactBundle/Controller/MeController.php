@@ -3,6 +3,7 @@
 namespace ContactBundle\Controller;
 
 use ContactBundle\Assembler\UserAssembler;
+use ContactBundle\HttpFoundation\JsonResponse;
 use ContactBundle\Service\UserService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +14,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 class MeController extends Controller
 {
-
     /**
      * The serializer to transform DTO to JSON.
      *
@@ -43,7 +43,7 @@ class MeController extends Controller
      * @Method({"POST"})
      *
      * @param Request $request
-     * @return Response The response
+     * @return JsonResponse The response of the updated images.
      */
     public function setMyImagesAction(
         Request $request,
@@ -60,12 +60,10 @@ class MeController extends Controller
            $userService->setBackground($background, $this->getUser());
         }
 
-        return new Response(
+        return JsonResponse::OK(
             $this->_serializer->serialize($userAssembler->entityToDto(
                 $this->getUser()
-            ), 'json'),
-            Response::HTTP_OK,
-            ["Content-Type" => "application/json"]
+            ), 'json')
         );
     }
 
@@ -79,12 +77,10 @@ class MeController extends Controller
      * @return Response The response that contains data about the current user.
      */
     public function meAction(UserAssembler $userAssembler) {
-        return new Response(
+        return Response::OK(
             $this->_serializer->serialize($userAssembler->entityToDto(
                 $this->getUser()
-            ), 'json'),
-            Response::HTTP_OK,
-            ["Content-Type" => "application/json"]
+            ), 'json')
         );
     }
 }

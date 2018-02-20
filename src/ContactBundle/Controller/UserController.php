@@ -3,9 +3,9 @@
 namespace ContactBundle\Controller;
 
 use ContactBundle\Assembler\UserAssembler;
+use ContactBundle\HttpFoundation\JsonResponse;
 use ContactBundle\Service\UserService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -43,7 +43,7 @@ class UserController extends Controller
      * @Route("/users")
      * @Method({"POST"})
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function addAction(Request $request, UserService $userService, UserAssembler $userAssembler)
     {
@@ -57,10 +57,7 @@ class UserController extends Controller
         $userService->createUser($userAssembler->dtoToEntity($userDto));
 
         $json = $this->_serializer->serialize($userDto, 'json');
-        return new Response(
-            $json,
-            Response::HTTP_CREATED,
-            ["Content-Type" => "application/json"]
-        );
+
+        return JsonResponse::CREATED($json);
     }
 }
