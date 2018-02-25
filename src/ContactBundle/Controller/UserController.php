@@ -5,11 +5,12 @@ namespace ContactBundle\Controller;
 use ContactBundle\Assembler\UserAssembler;
 use ContactBundle\HttpFoundation\JsonResponse;
 use ContactBundle\Service\UserService;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
@@ -38,12 +39,14 @@ class UserController extends Controller
      * Route to add user. Send JSON with the correct data to add
      * a \ContactBundle\Entity\User.
      *
-     * @param Request $request The request send by the client.
-     *
      * @Route("/users")
      * @Method({"POST"})
      *
-     * @return JsonResponse
+     * @param Request $request The request send by the client.
+     * @param UserService $userService The user service dependency injection
+     * @param UserAssembler $userAssembler The user assembler dependency injection
+     *
+     * @return Response JSON response containing the newly created user.
      */
     public function addAction(Request $request, UserService $userService, UserAssembler $userAssembler)
     {

@@ -13,14 +13,13 @@ class UserAssembler
 
         $dto->setId($entity->getId())
             ->setUsername($entity->getUsername())
-            ->setPassword($entity->getPassword())
             ->setAvatar($entity->getAvatar())
             ->setBackground($entity->getBackground());
 
         return $dto;
     }
 
-    public function dtoToEntity($dto)
+    public function dtoToEntity(UserDto $dto)
     {
         $user = new User();
 
@@ -30,7 +29,7 @@ class UserAssembler
         return $user;
     }
 
-    public function entitiesToDtos($entities)
+    public function entitiesToDtos(array $entities)
     {
         $dtos = [];
         foreach ($entities as $entity) {

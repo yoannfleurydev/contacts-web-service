@@ -30,7 +30,7 @@ class PhoneDto
     /**
      * The identifier of the phone.
      *
-     * @var int
+     * @var string
      *
      * @Type("string")
      */
@@ -50,7 +50,7 @@ class PhoneDto
      *
      * @var int
      *
-     * @Type("string")
+     * @Type("int")
      */
     private $type;
 
@@ -76,9 +76,9 @@ class PhoneDto
      *
      * @param string $number The number of the phone.
      *
-     * @return Phone The current phone instance
+     * @return PhoneDto The current phone instance
      */
-    public function setNumber($number)
+    public function setNumber($number): PhoneDto
     {
         $this->number = $number;
 
@@ -90,7 +90,7 @@ class PhoneDto
      *
      * @return string The phone number
      */
-    public function getNumber()
+    public function getNumber(): string
     {
         return $this->number;
     }
@@ -100,9 +100,9 @@ class PhoneDto
      *
      * @param integer $type The type of the phone.
      *
-     * @return Phone The current instance.
+     * @return PhoneDto The current instance.
      */
-    public function setType($type)
+    public function setType($type): PhoneDto
     {
         $this->type = $type;
 
@@ -112,9 +112,9 @@ class PhoneDto
     /**
      * Get the type of the phone
      *
-     * @return string The type of the phone
+     * @return int The type of the phone
      */
-    public function getType()
+    public function getType(): int
     {
         return $this->type;
     }

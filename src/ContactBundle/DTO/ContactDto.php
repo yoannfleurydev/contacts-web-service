@@ -30,7 +30,7 @@ class ContactDto
     /**
      * The identifier of the contact.
      *
-     * @var int The identifier of the contact.
+     * @var string The identifier of the contact.
      *
      * @Type("string")
      */
@@ -84,7 +84,7 @@ class ContactDto
     /**
      * The phones of the contact.
      *
-     * @var Phone[] The phone numbers of the contact.
+     * @var PhoneDto[] The phone numbers of the contact.
      *
      * @Type("array<ContactBundle\DTO\PhoneDto>")
      */

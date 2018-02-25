@@ -72,18 +72,6 @@ class UserDto
         return $this->username;
     }
 
-    public function setPlainPassword($plainPassword): UserDto
-    {
-        $this->plainPassword = $plainPassword;
-
-        return $this;
-    }
-
-    public function getPlainPassword(): string
-    {
-        return $this->plainPassword;
-    }
-
     public function setPassword($password): UserDto
     {
         $this->password = $password;

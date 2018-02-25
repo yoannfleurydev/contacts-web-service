@@ -42,8 +42,11 @@ class MeController extends Controller
      * @Route("/me/images")
      * @Method({"POST"})
      *
-     * @param Request $request
-     * @return JsonResponse The response of the updated images.
+     * @param Request $request The request sent by the client
+     * @param UserService $userService The user service injection
+     * @param UserAssembler $userAssembler The user assembler injection
+     *
+     * @return Response The response of the updated images.
      */
     public function setMyImagesAction(
         Request $request,
@@ -74,10 +77,12 @@ class MeController extends Controller
      * @Route("/me")
      * @Method({"GET"})
      *
+     * @param UserAssembler $userAssembler The user assembler injection
+     *
      * @return Response The response that contains data about the current user.
      */
     public function meAction(UserAssembler $userAssembler) {
-        return Response::OK(
+        return JsonResponse::OK(
             $this->_serializer->serialize($userAssembler->entityToDto(
                 $this->getUser()
             ), 'json')

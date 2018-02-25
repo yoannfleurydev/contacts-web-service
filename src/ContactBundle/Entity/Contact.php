@@ -261,10 +261,12 @@ class Contact
      *
      * @return Contact The current contact.
      */
-    public function addPhone(Phone $phone)
+    public function addPhone(Phone $phone): Contact
     {
         $this->phones[] = $phone;
         $phone->setContact($this);
+
+        return $this;
     }
 
     public function setPhones($phones)

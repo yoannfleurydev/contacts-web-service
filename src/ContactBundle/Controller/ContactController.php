@@ -26,6 +26,7 @@ use ContactBundle\Exception\PhoneUnprocessableEntityHttpException;
 use ContactBundle\HttpFoundation\JsonResponse;
 use ContactBundle\Service\ContactService;
 use ContactBundle\Service\PhoneService;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Contact controller.
@@ -67,6 +68,8 @@ class ContactController extends Controller
      * @Route("/contacts")
      * @Method({"GET"})
      *
+     * @param ContactService $contactService The contact service injection
+     *
      * @return Response
      */
     public function readAllAction(ContactService $contactService)
@@ -81,12 +84,13 @@ class ContactController extends Controller
     /**
      * Expose a contact entity
      *
-     * @param string $id The identifier for the contact to get
-     *
      * @Route("/contacts/{id}")
      * @Method({"GET"})
      *
-     * @return JsonResponse
+     * @param Contact $contact The contact that match the id in the route
+     * @param ContactAssembler $contactAssembler The contact assembler injection
+     *
+     * @return Response
      */
     public function readAction(Contact $contact, ContactAssembler $contactAssembler)
     {
@@ -102,12 +106,14 @@ class ContactController extends Controller
      * Route to add contacts. Send JSON with the correct data to add
      * a \ContactBundle\Entity\Contact.
      *
-     * @param Request $request The request send by the client.
-     *
      * @Route("/contacts")
      * @Method({"POST"})
      *
-     * @return JsonResponse
+     * @param Request $request The request send by the client.
+     * @param ContactService $contactService
+     * @param ContactAssembler $contactAssembler
+     *
+     * @return Response
      */
     public function createAction(
         Request $request,
@@ -135,11 +141,13 @@ class ContactController extends Controller
     /**
      * Route to remove a contact.
      *
-     * @param integer $id The identifier of the contact to remove.
-     *
      * @Route("/contacts/{id}")
+     * @Method({"DELETE"})
      *
-     * @return JsonResponse The response with a 204 NO CONTENT if everything is
+     * @param Contact $contact The contact that match the id in the route
+     * @param ContactService $contactService The contact service injection
+     *
+     * @return Response The response with a 204 NO CONTENT if everything is
      *                      good or an error instead.
      */
     public function deleteAction(Contact $contact, ContactService $contactService)
@@ -151,12 +159,15 @@ class ContactController extends Controller
     /**
      * Route to add a phone number to a contact.
      *
-     * @param Request $request The request to get the phone to add to a contact.
-     * @param string  $id      The identifier of the contact.
-     *
      * @Route("/contacts/{id}/phones")
+     * @Method({"POST"})
      *
-     * @return JsonResponse The response with a 201 CREATED if everything is
+     * @param Request $request The request to get the phone to add to a contact.
+     * @param string $id The identifier of the contact.
+     * @param ContactService $contactService The contact service injection
+     * @param PhoneService $phoneService The phone service injection
+     *
+     * @return Response The response with a 201 CREATED if everything is
      *                      good or an error instead.
      */
     public function addPhoneAction(Request $request, $id, ContactService $contactService, PhoneService $phoneService)
