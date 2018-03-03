@@ -14,7 +14,7 @@ parameters:
     mailer_password: ~
 
     # A secret key that's used to generate certain security-related tokens
-    secret: ThisTokenIsNotSoSecretChangeIt
+    secret: 'AQSDD-FNQBE-NXUBV-NONDJ-ABRSJ-YXFYR-USRDJ-RHJUQ-TFCIE-VPYGB-CVBUC-AWXYW'
 
     # Override the JMS Serializer naming strategy
     jms_serializer.camel_case_naming_strategy.class: JMS\Serializer\Naming\IdenticalPropertyNamingStrategy
