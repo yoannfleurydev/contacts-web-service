@@ -20,6 +20,11 @@ openssl rsa -pubout -in var/jwt/private.pem -out var/jwt/public.pem
 * Load DataFixtures if needed : `php bin/console doctrine:fixtures:load`
 * Launch server : `php bin/console server:run`
 
+## Tests
+
+Just write your tests and run `./vendor/bin/simple-phpunit`. It is a wrapper provided
+by Symfony.
+
 ## Authors
 
 * Yoann Fleury <yoann.fleury@docapost-agility.fr>
