@@ -2,8 +2,8 @@
 
 namespace ContactBundle\Assembler;
 
-use ContactBundle\Entity\Phone;
 use ContactBundle\DTO\PhoneDto;
+use ContactBundle\Entity\Phone;
 
 class PhoneAssembler
 {

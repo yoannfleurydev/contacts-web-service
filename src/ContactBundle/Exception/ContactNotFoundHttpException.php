@@ -2,8 +2,8 @@
 
 namespace ContactBundle\Exception;
 
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * Class ContactNotFoundException

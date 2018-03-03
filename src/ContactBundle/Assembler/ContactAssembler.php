@@ -2,8 +2,8 @@
 
 namespace ContactBundle\Assembler;
 
-use ContactBundle\Entity\Contact;
 use ContactBundle\DTO\ContactDto;
+use ContactBundle\Entity\Contact;
 
 class ContactAssembler
 {

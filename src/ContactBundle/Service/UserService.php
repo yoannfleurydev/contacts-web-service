@@ -1,19 +1,15 @@
 <?php
 namespace ContactBundle\Service;
 
-use ContactBundle\Repository\UserRepository;
-use Doctrine\ORM\EntityManager;
-use Symfony\Bridge\Monolog\Logger;
-
-use ContactBundle\Assembler\UserAssembler;
 use ContactBundle\DTO\UserDto;
 use ContactBundle\Entity\User;
 use ContactBundle\Exception\UserConflictHttpException;
-use Symfony\Component\Config\Definition\Exception\Exception;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use ContactBundle\Repository\UserRepository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Doctrine\ORM\EntityManager;
+use Symfony\Bridge\Monolog\Logger;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 class UserService

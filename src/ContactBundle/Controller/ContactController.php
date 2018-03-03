@@ -13,12 +13,6 @@
 
 namespace ContactBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-
 use ContactBundle\Assembler\ContactAssembler;
 use ContactBundle\Entity\Contact;
 use ContactBundle\Exception\ContactUnprocessableEntityHttpException;
@@ -26,6 +20,11 @@ use ContactBundle\Exception\PhoneUnprocessableEntityHttpException;
 use ContactBundle\HttpFoundation\JsonResponse;
 use ContactBundle\Service\ContactService;
 use ContactBundle\Service\PhoneService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

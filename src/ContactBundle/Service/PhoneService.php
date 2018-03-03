@@ -14,12 +14,9 @@
  */
 namespace ContactBundle\Service;
 
+use ContactBundle\Exception\ContactNotFoundHttpException;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Monolog\Logger;
-
-use ContactBundle\Assembler\PhoneAssembler;
-use ContactBundle\DTO\PhoneDto;
-use ContactBundle\Exception\ContactNotFoundHttpException;
 
 /**
  * Phone service. Use this class to return DTO from entities from

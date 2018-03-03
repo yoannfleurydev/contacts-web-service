@@ -14,14 +14,13 @@
  */
 namespace ContactBundle\Service;
 
-use ContactBundle\Entity\Contact;
-use ContactBundle\Entity\User;
-use Doctrine\ORM\EntityManager;
-use Symfony\Bridge\Monolog\Logger;
-
 use ContactBundle\Assembler\ContactAssembler;
 use ContactBundle\DTO\ContactDto;
+use ContactBundle\Entity\Contact;
+use ContactBundle\Entity\User;
 use ContactBundle\Exception\ContactNotFoundHttpException;
+use Doctrine\ORM\EntityManager;
+use Symfony\Bridge\Monolog\Logger;
 
 /**
  * Contact service. Use this class to return DTO from entities from

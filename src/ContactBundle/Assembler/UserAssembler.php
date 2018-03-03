@@ -2,8 +2,8 @@
 
 namespace ContactBundle\Assembler;
 
-use ContactBundle\Entity\User;
 use ContactBundle\DTO\UserDto;
+use ContactBundle\Entity\User;
 
 class UserAssembler
 {

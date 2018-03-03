@@ -5,11 +5,11 @@ namespace ContactBundle\Controller;
 use ContactBundle\Assembler\UserAssembler;
 use ContactBundle\HttpFoundation\JsonResponse;
 use ContactBundle\Service\UserService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
