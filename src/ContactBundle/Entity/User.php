@@ -4,6 +4,7 @@ namespace ContactBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="user")
@@ -23,6 +24,7 @@ class User implements UserInterface, \Serializable
     /**
      * The username of the user.
      *
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=25, unique=true)
      */
     private $username;
@@ -46,6 +48,7 @@ class User implements UserInterface, \Serializable
     /**
      * Avatar of the user.
      *
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=255)
      */
     private $avatar = "default.jpg";
@@ -54,9 +57,10 @@ class User implements UserInterface, \Serializable
      * Background of the user. It could be the favorite image of the user, or
      * just the image of his choice.
      *
-     * @ORM\Column(type="string", length=255)
-     *
      * @var string Location of the background image.
+     *
+     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=255)
      */
     private $background = "default.jpg";
 
