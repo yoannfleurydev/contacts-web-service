@@ -18,7 +18,7 @@ class PhoneAssembler
         return $phoneDto;
     }
 
-    public function dtoToEntity($phoneDto): Phone
+    public function dtoToEntity(PhoneDto $phoneDto): Phone
     {
         $phoneEntity = new Phone();
 

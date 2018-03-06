@@ -98,7 +98,7 @@ class PhoneDto
     /**
      * Set the type of the phone
      *
-     * @param integer $type The type of the phone.
+     * @param string $type The type of the phone.
      *
      * @return PhoneDto The current instance.
      */
@@ -112,9 +112,9 @@ class PhoneDto
     /**
      * Get the type of the phone
      *
-     * @return int The type of the phone
+     * @return string The type of the phone
      */
-    public function getType(): int
+    public function getType(): string
     {
         return $this->type;
     }

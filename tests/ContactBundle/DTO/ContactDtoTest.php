@@ -4,8 +4,9 @@ namespace Tests\ContactBundle\DTO;
 
 use ContactBundle\DTO\ContactDto;
 use ContactBundle\DTO\PhoneDto;
+use PHPUnit\Framework\TestCase;
 
-class ContactDtoTest extends \PHPUnit_Framework_TestCase
+class ContactDtoTest extends TestCase
 {
     public function testGetterSetter()
     {

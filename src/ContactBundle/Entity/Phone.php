@@ -53,7 +53,7 @@ class Phone
     /**
      * The type of the phone number.
      *
-     * @var int
+     * @var string
      *
      * @ORM\Column(name="type", type="string", length=255)
      */
@@ -105,7 +105,7 @@ class Phone
     /**
      * Set type
      *
-     * @param integer $type The type of the phone.
+     * @param string $type The type of the phone.
      *
      * @return Phone
      */
@@ -119,9 +119,9 @@ class Phone
     /**
      * Get type
      *
-     * @return int
+     * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
