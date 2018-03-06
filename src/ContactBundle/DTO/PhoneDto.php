@@ -48,9 +48,9 @@ class PhoneDto
     /**
      * The type of the phone number.
      *
-     * @var int
+     * @var string
      *
-     * @Type("int")
+     * @Type("string")
      */
     private $type;
 
