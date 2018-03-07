@@ -22,7 +22,7 @@ class ContactAssembler
         return $dto;
     }
 
-    public static function dtoToEntity($dto, $user)
+    public static function dtoToEntity(ContactDto $dto, $user)
     {
         $contact = new Contact();
 

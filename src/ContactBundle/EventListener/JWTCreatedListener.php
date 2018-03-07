@@ -33,6 +33,7 @@ class JWTCreatedListener
      * @param JWTCreatedEvent $event
      *
      * @return void
+     * @throws \Doctrine\ORM\ORMException
      */
     public function onJWTCreated(JWTCreatedEvent $event)
     {

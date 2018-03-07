@@ -19,6 +19,7 @@ use ContactBundle\DTO\ContactDto;
 use ContactBundle\Entity\Contact;
 use ContactBundle\Entity\User;
 use ContactBundle\Exception\ContactNotFoundHttpException;
+use ContactBundle\Repository\ContactRepository;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Monolog\Logger;
 
@@ -71,7 +72,9 @@ class ContactService
     }
 
     /**
+     * @param $id int The identifier of the contact to retrieve
      * @return ContactDto a contact DTO
+     * @throws \Doctrine\ORM\ORMException
      */
     public function get($id): ContactDto
     {
@@ -100,6 +103,7 @@ class ContactService
      */
     public function getContactByUser($id, $user)
     {
+        /** @var Contact $contact */
         $contact = $this->_contactRepository
             ->findOneBy(['id' => $id, 'user' => $user]);
 
@@ -130,7 +134,9 @@ class ContactService
      * @param ContactDto $contact The contact
      * @param User $user
      *
-     * @return string
+     * @return Contact
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function createContact(ContactDto $contact, User $user): Contact
     {

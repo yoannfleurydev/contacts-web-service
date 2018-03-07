@@ -14,6 +14,8 @@
  */
 namespace ContactBundle\Service;
 
+use ContactBundle\Entity\Contact;
+use ContactBundle\Entity\Phone;
 use ContactBundle\Exception\ContactNotFoundHttpException;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Monolog\Logger;
@@ -81,11 +83,15 @@ class PhoneService
      * @param Phone $phone The phone
      * @param integer $id The identifier of the contact.
      *
-     * @return void
+     * @return Phone
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function createPhone(Phone $phone, $id): Phone
     {
         $phone->setType(strtolower($phone->getType()));
+
+        /** @var Contact $contactEntity */
         $contactEntity = $this->_contactRepository->findOneById($id);
 
         if ($contactEntity === null) {
