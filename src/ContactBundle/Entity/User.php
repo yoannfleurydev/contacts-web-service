@@ -24,7 +24,7 @@ class User implements UserInterface, \Serializable
     /**
      * The username of the user.
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(payload={"key"="user.username.not.blank"})
      * @ORM\Column(type="string", length=25, unique=true)
      */
     private $username;
@@ -32,6 +32,7 @@ class User implements UserInterface, \Serializable
     /**
      * The BCrypt crypted password.
      *
+     * @Assert\NotBlank(payload={"key"="user.password.not.blank"})
      * @ORM\Column(type="string", length=64)
      */
     private $password;

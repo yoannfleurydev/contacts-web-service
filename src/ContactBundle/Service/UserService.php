@@ -1,15 +1,18 @@
 <?php
 namespace ContactBundle\Service;
 
+use ContactBundle\DTO\Error\ConstraintViolationErrorDto;
 use ContactBundle\Entity\User;
+use ContactBundle\Exception\ConstraintViolationException;
 use ContactBundle\Exception\UserConflictHttpException;
-use ContactBundle\Exception\UserUnprocessableEntityHttpException;
 use ContactBundle\Repository\UserRepository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManager;
+use JMS\Serializer\Serializer;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
@@ -51,6 +54,13 @@ class UserService
     private $_validator;
 
     /**
+     * Serializer
+     *
+     * @var Serializer $_serializer
+     */
+    private $_serializer;
+
+    /**
      * The path to the avatars directory.
      *
      * @var string
@@ -72,6 +82,7 @@ class UserService
      * @param EntityManager $entityManager The entity manager of the application.
      * @param UserPasswordEncoderInterface $encoder The entity manager of the application.
      * @param ValidatorInterface $validator The validator to validate the entity.
+     * @param Serializer $serializer The serializer for thrown exception.
      * @param string $avatarsDirectory The path to the avatars directory.
      * @param string $backgroundsDirectory The path to the backgrounds directory.
      */
@@ -80,6 +91,7 @@ class UserService
         EntityManager $entityManager,
         UserPasswordEncoderInterface $encoder,
         ValidatorInterface $validator,
+        Serializer $serializer,
         $avatarsDirectory,
         $backgroundsDirectory
     )
@@ -88,6 +100,7 @@ class UserService
         $this->_entityManager = $entityManager;
         $this->_encoder = $encoder;
         $this->_validator = $validator;
+        $this->_serializer = $serializer;
         $this->_avatarsDirectory = $avatarsDirectory;
         $this->_backgroundsDirectory = $backgroundsDirectory;
         $this->_userRepository = $this->_entityManager
@@ -110,9 +123,11 @@ class UserService
      */
     public function createUser(User $user): void
     {
-        $errors = $this->_validator->validate($user);
-        if (count($errors) > 0) {
-            throw new UserUnprocessableEntityHttpException($errors);
+        /** @var ConstraintViolationListInterface $constraintViolationList */
+        $constraintViolationList = $this->_validator->validate($user);
+        if ($constraintViolationList->count() > 0) {
+            $constraintViolationDtoList = ConstraintViolationErrorDto::fromConstraintViolationList($constraintViolationList);
+            throw ConstraintViolationException::fromConstraintViolationErrorList($constraintViolationDtoList, $this->_serializer);
         }
 
         $plainPassword = $user->getPassword();

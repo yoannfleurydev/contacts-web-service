@@ -40,7 +40,7 @@ services:
         public: true
         arguments: ["@logger", "@doctrine.orm.entity_manager"]
     ContactBundle\Service\UserService:
-        arguments: ["@logger", "@doctrine.orm.entity_manager", "@security.password_encoder", "@validator", "%avatars_directory%", "%backgrounds_directory%"]
+        arguments: ["@logger", "@doctrine.orm.entity_manager", "@security.password_encoder", "@validator", "@jms_serializer", "%avatars_directory%", "%backgrounds_directory%"]
     acme_api.event.jwt_created_listener:
         class: ContactBundle\EventListener\JWTCreatedListener
         arguments: [ "@request_stack", "@doctrine.orm.entity_manager" ]

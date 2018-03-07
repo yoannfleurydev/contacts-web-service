@@ -44,7 +44,9 @@ class ExceptionListener
     {
         $exception = $event->getException();
 
-        if ($exception instanceof HttpException) {
+        if ($exception instanceof ConstraintViolationException) {
+            $event->setResponse(new Response($exception->getMessage(), $exception->getStatusCode()));
+        } else if ($exception instanceof HttpException) {
             // If instance of HttpException then send expected status code
             $this->_logger->addInfo(
                 get_class($exception) .

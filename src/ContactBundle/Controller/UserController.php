@@ -47,6 +47,8 @@ class UserController extends Controller
      * @param UserAssembler $userAssembler The user assembler dependency injection
      *
      * @return Response JSON response containing the newly created user.
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function addAction(Request $request, UserService $userService, UserAssembler $userAssembler)
     {
