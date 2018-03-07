@@ -14,7 +14,9 @@
 namespace ContactBundle\Controller;
 
 use ContactBundle\Assembler\ContactAssembler;
+use ContactBundle\DTO\Error\ConstraintViolationErrorDto;
 use ContactBundle\Entity\Contact;
+use ContactBundle\Exception\ConstraintViolationException;
 use ContactBundle\Exception\ContactUnprocessableEntityHttpException;
 use ContactBundle\Exception\PhoneUnprocessableEntityHttpException;
 use ContactBundle\HttpFoundation\JsonResponse;
@@ -26,6 +28,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Contact controller.
@@ -112,7 +115,10 @@ class ContactController extends Controller
      * @param ContactService $contactService
      * @param ContactAssembler $contactAssembler
      *
+     * @param ValidatorInterface $validator
      * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function createAction(
         Request $request,
@@ -168,6 +174,8 @@ class ContactController extends Controller
      *
      * @return Response The response with a 201 CREATED if everything is
      *                      good or an error instead.
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function addPhoneAction(Request $request, $id, ContactService $contactService, PhoneService $phoneService)
     {

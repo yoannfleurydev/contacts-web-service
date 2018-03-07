@@ -15,6 +15,7 @@
 namespace ContactBundle\DTO;
 
 use JMS\Serializer\Annotation\Type;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Phone
@@ -41,6 +42,7 @@ class PhoneDto
      *
      * @var string
      *
+     * @Assert\NotBlank(payload={"key"="phone.dto.number.not.blank"})
      * @Type("string")
      */
     private $number;
@@ -50,6 +52,7 @@ class PhoneDto
      *
      * @var string
      *
+     * @Assert\NotBlank(payload={"key"="phone.dto.type.not.blank"})
      * @Type("string")
      */
     private $type;

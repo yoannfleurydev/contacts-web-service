@@ -3,6 +3,8 @@
 namespace ContactBundle\Controller;
 
 use ContactBundle\Assembler\UserAssembler;
+use ContactBundle\DTO\Error\ConstraintViolationErrorDto;
+use ContactBundle\Exception\ConstraintViolationException;
 use ContactBundle\HttpFoundation\JsonResponse;
 use ContactBundle\Service\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -11,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UserController extends Controller
 {
@@ -46,11 +49,12 @@ class UserController extends Controller
      * @param UserService $userService The user service dependency injection
      * @param UserAssembler $userAssembler The user assembler dependency injection
      *
+     * @param ValidatorInterface $validator
      * @return Response JSON response containing the newly created user.
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function addAction(Request $request, UserService $userService, UserAssembler $userAssembler)
+    public function addAction(Request $request, UserService $userService, UserAssembler $userAssembler, ValidatorInterface $validator)
     {
         $json = $request->getContent();
         $userDto = $this->_serializer->deserialize(
@@ -58,6 +62,12 @@ class UserController extends Controller
             'ContactBundle\DTO\UserDto',
             'json'
         );
+
+        $constraintViolationList = $validator->validate($userDto);
+        if ($constraintViolationList->count() > 0) {
+            $constraintViolationDtoList = ConstraintViolationErrorDto::fromConstraintViolationList($constraintViolationList);
+            throw ConstraintViolationException::fromConstraintViolationErrorList($constraintViolationDtoList, $this->_serializer);
+        }
 
         $userService->createUser($userAssembler->dtoToEntity($userDto));
 

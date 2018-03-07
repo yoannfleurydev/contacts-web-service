@@ -3,6 +3,7 @@
 namespace ContactBundle\DTO;
 
 use JMS\Serializer\Annotation\Type;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class UserDto
 {
@@ -17,11 +18,13 @@ class UserDto
     private $identifier;
 
     /**
+     * @Assert\NotBlank(payload={"key"="user.dto.username.not.blank"})
      * @Type("string")
      */
     private $username;
 
     /**
+     * @Assert\NotBlank(payload={"key"="user.dto.password.not.blank"})
      * @Type("string")
      */
     private $password;
