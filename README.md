@@ -1,5 +1,7 @@
 # Contacts
 
+[![Build Status](https://travis-ci.org/yoannfleurydev/contacts-web-service.svg?branch=master)](https://travis-ci.org/yoannfleurydev/contacts-web-service)
+
 POC using Symfony project.
 
 ## Configuration
