@@ -3,7 +3,7 @@
 namespace ContactBundle\EventListener;
 
 use ContactBundle\Entity\User;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -15,15 +15,15 @@ class JWTCreatedListener
     private $requestStack;
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $em;
 
     /**
      * @param RequestStack $requestStack
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      */
-    public function __construct(RequestStack $requestStack, EntityManager $em)
+    public function __construct(RequestStack $requestStack, EntityManagerInterface $em)
     {
         $this->requestStack = $requestStack;
         $this->em = $em;
@@ -33,7 +33,6 @@ class JWTCreatedListener
      * @param JWTCreatedEvent $event
      *
      * @return void
-     * @throws \Doctrine\ORM\ORMException
      */
     public function onJWTCreated(JWTCreatedEvent $event)
     {
