@@ -57,16 +57,25 @@ class ContactService
     private $_contactRepository;
 
     /**
+     * Assembler for the contacts
+     *
+     * @var ContactAssembler $_contactAssembler
+     */
+    private $_contactAssembler;
+
+    /**
      * Constructor of the contact service. It takes as parameters the logger
      * service and the entity manager of the application.
      *
-     * @param Logger        $logger        The logger service.
+     * @param Logger $logger The logger service.
      * @param EntityManager $entityManager The entity manager of the application.
+     * @param ContactAssembler $contactAssembler
      */
-    public function __construct(Logger $logger, EntityManager $entityManager)
+    public function __construct(Logger $logger, EntityManager $entityManager, ContactAssembler $contactAssembler)
     {
         $this->_logger = $logger;
         $this->_entityManager = $entityManager;
+        $this->_contactAssembler = $contactAssembler;
         $this->_contactRepository = $this->_entityManager
             ->getRepository('ContactBundle:Contact');
     }
@@ -79,7 +88,7 @@ class ContactService
     public function get($id): ContactDto
     {
         $contacts = $this->_contactRepository->findOneById($id);
-        return ContactAssembler::entityToDto($contacts);
+        return $this->_contactAssembler->entityToDto($contacts);
     }
 
     /**
@@ -90,7 +99,7 @@ class ContactService
     public function getAllContacts()
     {
         $contacts = $this->_contactRepository->findAll();
-        return ContactAssembler::entitiesToDtos($contacts);
+        return $this->_contactAssembler->entitiesToDtos($contacts);
     }
 
     /**
@@ -111,7 +120,7 @@ class ContactService
             throw new ContactNotFoundHttpException();
         }
 
-        return ContactAssembler::entityToDto(
+        return $this->_contactAssembler->entityToDto(
             $contact
         );
     }
@@ -119,11 +128,13 @@ class ContactService
     /**
      * Get all the contact as DTO.
      *
+     * @param $user
      * @return ContactDto[]
+     * @throws \Doctrine\ORM\ORMException
      */
     public function getAllContactsByUser($user)
     {
-        return ContactAssembler::entitiesToDtos(
+        return $this->_contactAssembler->entitiesToDtos(
             $this->_contactRepository->findByUser($user)
         );
     }
@@ -140,7 +151,7 @@ class ContactService
      */
     public function createContact(ContactDto $contact, User $user): Contact
     {
-        $contactEntity = ContactAssembler::dtoToEntity($contact, $user);
+        $contactEntity = $this->_contactAssembler->dtoToEntity($contact, $user);
 
         foreach($contactEntity->getPhones() as $phone) {
             $phone->setContact($contactEntity);

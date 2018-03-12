@@ -73,6 +73,7 @@ class ContactController extends Controller
      * @param ContactService $contactService The contact service injection
      *
      * @return Response
+     * @throws \Doctrine\ORM\ORMException
      */
     public function readAllAction(ContactService $contactService)
     {

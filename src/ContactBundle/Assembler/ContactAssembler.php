@@ -7,7 +7,20 @@ use ContactBundle\Entity\Contact;
 
 class ContactAssembler
 {
-    public static function entityToDto(Contact $entity)
+    /** @var PhoneAssembler $phoneAssembler */
+    private $phoneAssembler;
+
+    /**
+     * ContactAssembler constructor.
+     * @param PhoneAssembler $phoneAssembler
+     */
+    public function __construct(PhoneAssembler $phoneAssembler)
+    {
+        $this->phoneAssembler = $phoneAssembler;
+    }
+
+
+    public function entityToDto(Contact $entity)
     {
         $dto = new ContactDto();
 
@@ -17,12 +30,12 @@ class ContactAssembler
             ->setCompany($entity->getCompany())
             ->setWebsite($entity->getWebsite())
             ->setNote($entity->getNote())
-            ->setPhones(PhoneAssembler::entitiesToDtos($entity->getPhones()));
+            ->setPhones($this->phoneAssembler->entitiesToDtos($entity->getPhones()));
 
         return $dto;
     }
 
-    public static function dtoToEntity(ContactDto $dto, $user)
+    public function dtoToEntity(ContactDto $dto, $user)
     {
         $contact = new Contact();
 
@@ -31,13 +44,13 @@ class ContactAssembler
             ->setCompany($dto->getCompany())
             ->setWebsite($dto->getWebsite())
             ->setNote($dto->getNote())
-            ->setPhones(PhoneAssembler::dtosToEntities($dto->getPhones()))
+            ->setPhones($this->phoneAssembler->dtosToEntities($dto->getPhones()))
             ->setUser($user);
 
         return $contact;
     }
 
-    public static function entitiesToDtos($entities)
+    public function entitiesToDtos($entities)
     {
         $dtos = [];
         foreach ($entities as $entity) {
