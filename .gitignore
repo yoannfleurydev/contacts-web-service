@@ -17,7 +17,6 @@
 /web/bundles/
 
 /.idea/
-/app/config/config.yml
 /app/sqlite.db
 
 !/web/public/uploads/avatars
