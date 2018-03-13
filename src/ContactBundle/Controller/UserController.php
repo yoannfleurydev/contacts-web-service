@@ -7,6 +7,7 @@ use ContactBundle\DTO\Error\ConstraintViolationErrorDto;
 use ContactBundle\Exception\ConstraintViolationException;
 use ContactBundle\HttpFoundation\JsonResponse;
 use ContactBundle\Service\UserService;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,6 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Swagger\Annotations as SWG;
 
 class UserController extends Controller
 {
@@ -44,6 +46,26 @@ class UserController extends Controller
      *
      * @Route("/users")
      * @Method({"POST"})
+     * @SWG\Post(
+     *     path="/users",
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="user",
+     *         in="body",
+     *         required=true,
+     *         type="object",
+     *         @Model(type=ContactBundle\DTO\UserDto::class)
+     *     ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Created",
+     *         @Model(type=ContactBundle\DTO\UserDto::class)
+     *     ),
+     *     @SWG\Response(
+     *         response=409,
+     *         description="User already exists"
+     *     )
+     * )
      *
      * @param Request $request The request send by the client.
      * @param UserService $userService The user service dependency injection
