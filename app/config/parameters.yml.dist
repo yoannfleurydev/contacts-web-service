@@ -25,3 +25,4 @@ parameters:
 
     avatars_directory:     '%kernel.project_dir%/web/public/uploads/avatars'
     backgrounds_directory: '%kernel.project_dir%/web/public/uploads/backgrounds'
+    sqlite_db_directory: "%kernel.project_dir%/var/sqlite.db"
