@@ -3,11 +3,23 @@
 namespace ContactBundle\DTO;
 
 use JMS\Serializer\Annotation\Type;
+use Swagger\Annotations as SWG;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * Class UserDto
+ *
+ * @SWG\Definition(type="object", required={"username", "password"})
+ *
+ * @package ContactBundle\DTO
+ */
 class UserDto
 {
     /**
+     * Unique identifier as UUID
+     * @var string
+     *
+     * @SWG\Property()
      * @Type("string")
      */
     private $id;
@@ -18,23 +30,39 @@ class UserDto
     private $identifier;
 
     /**
+     * The username of the user.
+     * @var string
+     *
+     * @SWG\Property(example="emma.watson")
      * @Assert\NotBlank(payload={"key"="user.dto.username.not.blank"})
      * @Type("string")
      */
     private $username;
 
     /**
+     * The password of the user.
+     * @var string
+     *
+     * @SWG\Property()
      * @Assert\NotBlank(payload={"key"="user.dto.password.not.blank"})
      * @Type("string")
      */
     private $password;
 
     /**
+     * The avatar of the user. A string when getting the value, a multipart when setting it.
+     * @var string
+     *
+     * @SWG\Property()
      * @Type("string")
      */
     private $avatar;
 
     /**
+     * The background of the user. A string when getting the value, a multipart when setting it.
+     * @var string
+     *
+     * @SWG\Property()
      * @Type("string")
      */
     private $background;

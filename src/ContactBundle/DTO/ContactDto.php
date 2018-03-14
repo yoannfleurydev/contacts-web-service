@@ -14,10 +14,13 @@
 namespace ContactBundle\DTO;
 
 use JMS\Serializer\Annotation\Type;
+use Swagger\Annotations as SWG;
 
 /**
  * Contact DTO. This DTO represents the person and is connected to
  * multiple phones, dates, emails etc.
+ *
+ * @SWG\Definition(type="object")
  *
  * @category Contact
  * @package  ContactBundle\DTO
@@ -32,6 +35,7 @@ class ContactDto
      *
      * @var string The identifier of the contact.
      *
+     * @SWG\Property()
      * @Type("string")
      */
     private $id;
@@ -41,6 +45,7 @@ class ContactDto
      *
      * @var string The first name of the contact.
      *
+     * @SWG\Property()
      * @Type("string")
      */
     private $firstName;
@@ -50,6 +55,7 @@ class ContactDto
      *
      * @var string The last name of the contact.
      *
+     * @SWG\Property()
      * @Type("string")
      */
     private $lastName;
@@ -59,6 +65,7 @@ class ContactDto
      *
      * @var string The company of the contact.
      *
+     * @SWG\Property()
      * @Type("string")
      */
     private $company;
@@ -68,6 +75,7 @@ class ContactDto
      *
      * @var string The URL of the website of the contact.
      *
+     * @SWG\Property()
      * @Type("string")
      */
     private $website;
@@ -77,6 +85,7 @@ class ContactDto
      *
      * @var string The note made by the user, for the contact.
      *
+     * @SWG\Property()
      * @Type("string")
      */
     private $note;
@@ -86,6 +95,7 @@ class ContactDto
      *
      * @var PhoneDto[] The phone numbers of the contact.
      *
+     * @SWG\Property()
      * @Type("array<ContactBundle\DTO\PhoneDto>")
      */
     private $phones;

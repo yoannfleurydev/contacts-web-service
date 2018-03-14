@@ -10,12 +10,12 @@ use ContactBundle\Service\UserService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Swagger\Annotations as SWG;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Swagger\Annotations as SWG;
 
 class UserController extends Controller
 {
@@ -48,6 +48,7 @@ class UserController extends Controller
      * @Method({"POST"})
      * @SWG\Post(
      *     path="/users",
+     *     tags={"users"},
      *     produces={"application/json"},
      *     @SWG\Parameter(
      *         name="user",

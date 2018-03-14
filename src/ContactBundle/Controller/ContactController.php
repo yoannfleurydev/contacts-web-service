@@ -14,21 +14,20 @@
 namespace ContactBundle\Controller;
 
 use ContactBundle\Assembler\ContactAssembler;
-use ContactBundle\DTO\Error\ConstraintViolationErrorDto;
 use ContactBundle\Entity\Contact;
-use ContactBundle\Exception\ConstraintViolationException;
 use ContactBundle\Exception\ContactUnprocessableEntityHttpException;
 use ContactBundle\Exception\PhoneUnprocessableEntityHttpException;
 use ContactBundle\HttpFoundation\JsonResponse;
 use ContactBundle\Service\ContactService;
 use ContactBundle\Service\PhoneService;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Swagger\Annotations as SWG;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Contact controller.
@@ -65,10 +64,23 @@ class ContactController extends Controller
     }
 
     /**
-     * Expose the contacts entities
+     * Expose the contacts entities for the user.
      *
      * @Route("/contacts")
      * @Method({"GET"})
+     * @SWG\Get(
+     *     path="/contacts",
+     *     tags={"contacts"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Listing of the contacts",
+     *         @SWG\Schema(
+     *             type="array",
+     *             @Model(type=ContactBundle\DTO\ContactDto::class)
+     *         )
+     *     )
+     * )
      *
      * @param ContactService $contactService The contact service injection
      *
@@ -85,10 +97,32 @@ class ContactController extends Controller
     }
 
     /**
-     * Expose a contact entity
+     * Expose a contact entity that the user owns.
      *
      * @Route("/contacts/{id}")
      * @Method({"GET"})
+     * @SWG\Get(
+     *     path="/contacts/{id}",
+     *     tags={"contacts"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Identifier of contact to get",
+     *         required=true,
+     *         type="string",
+     *         format="uuid"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="The contact has been found",
+     *         @Model(type=ContactBundle\DTO\ContactDto::class)
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="The contact found"
+     *     )
+     * )
      *
      * @param Contact $contact The contact that match the id in the route
      * @param ContactAssembler $contactAssembler The contact assembler injection
@@ -106,17 +140,32 @@ class ContactController extends Controller
     }
 
     /**
-     * Route to add contacts. Send JSON with the correct data to add
-     * a \ContactBundle\Entity\Contact.
+     * Add contacts for the user.
      *
      * @Route("/contacts")
      * @Method({"POST"})
+     * @SWG\Post(
+     *     path="/contacts",
+     *     tags={"contacts"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="contact",
+     *         in="body",
+     *         required=true,
+     *         type="object",
+     *         @Model(type=ContactBundle\DTO\ContactDto::class)
+     *     ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Created",
+     *         @Model(type=ContactBundle\DTO\ContactDto::class)
+     *     )
+     * )
      *
      * @param Request $request The request send by the client.
      * @param ContactService $contactService
      * @param ContactAssembler $contactAssembler
      *
-     * @param ValidatorInterface $validator
      * @return Response
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
@@ -145,10 +194,31 @@ class ContactController extends Controller
     }
 
     /**
-     * Route to remove a contact.
+     * Remove a contact for the user.
      *
      * @Route("/contacts/{id}")
      * @Method({"DELETE"})
+     * @SWG\Delete(
+     *     path="/contacts/{id}",
+     *     produces={"application/json"},
+     *     tags={"contacts"},
+     *     @SWG\Parameter(
+     *         description="Contact id to delete",
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         type="string",
+     *         format="uuid"
+     *     ),
+     *     @SWG\Response(
+     *         response=204,
+     *         description="Contact deleted"
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Contact not found"
+     *     )
+     * )
      *
      * @param Contact $contact The contact that match the id in the route
      * @param ContactService $contactService The contact service injection
@@ -167,6 +237,31 @@ class ContactController extends Controller
      *
      * @Route("/contacts/{id}/phones")
      * @Method({"POST"})
+     * @SWG\Post(
+     *     path="/contacts/{id}/phones",
+     *     tags={"contacts"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         description="Identifier of the contact to add a phone",
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         type="string",
+     *         format="uuid"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="phone",
+     *         in="body",
+     *         required=true,
+     *         type="object",
+     *         @Model(type=ContactBundle\DTO\PhoneDto::class)
+     *     ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Created",
+     *         @Model(type=ContactBundle\DTO\PhoneDto::class)
+     *     )
+     * )
      *
      * @param Request $request The request to get the phone to add to a contact.
      * @param string $id The identifier of the contact.
