@@ -43,7 +43,7 @@ class UserDto
      * The password of the user.
      * @var string
      *
-     * @SWG\Property()
+     * @SWG\Property(example="password")
      * @Assert\NotBlank(payload={"key"="user.dto.password.not.blank"})
      * @Type("string")
      */

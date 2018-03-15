@@ -5,12 +5,14 @@ namespace ContactBundle\Controller;
 use ContactBundle\Assembler\UserAssembler;
 use ContactBundle\HttpFoundation\JsonResponse;
 use ContactBundle\Service\UserService;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Swagger\Annotations as SWG;
 
 class MeController extends Controller
 {
@@ -41,6 +43,27 @@ class MeController extends Controller
      *
      * @Route("/me/images")
      * @Method({"POST"})
+     * @SWG\Post(
+     *     path="/me/images",
+     *     tags={"users"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="user",
+     *         in="body",
+     *         required=true,
+     *         type="object",
+     *         @Model(type=ContactBundle\DTO\UserDto::class)
+     *     ),
+     *     @SWG\Response(
+     *         response=204,
+     *         description="Updated",
+     *         @Model(type=ContactBundle\DTO\UserDto::class)
+     *     ),
+     *     @SWG\Response(
+     *         response=409,
+     *         description="User already exists"
+     *     )
+     * )
      *
      * @param Request $request The request sent by the client
      * @param UserService $userService The user service injection
@@ -76,6 +99,20 @@ class MeController extends Controller
      *
      * @Route("/me")
      * @Method({"GET"})
+     * @SWG\Get(
+     *     path="/me",
+     *     tags={"users"},
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="The data for the current user has been found",
+     *         @Model(type=ContactBundle\DTO\UserDto::class)
+     *     ),
+     *     @SWG\Response(
+     *         response=401,
+     *         description="The current user is not connected"
+     *     )
+     * )
      *
      * @param UserAssembler $userAssembler The user assembler injection
      *

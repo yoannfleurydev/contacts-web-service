@@ -45,7 +45,7 @@ class ContactDto
      *
      * @var string The first name of the contact.
      *
-     * @SWG\Property()
+     * @SWG\Property(example="Emma")
      * @Type("string")
      */
     private $firstName;
@@ -55,7 +55,7 @@ class ContactDto
      *
      * @var string The last name of the contact.
      *
-     * @SWG\Property()
+     * @SWG\Property(example="Watson")
      * @Type("string")
      */
     private $lastName;
@@ -65,7 +65,7 @@ class ContactDto
      *
      * @var string The company of the contact.
      *
-     * @SWG\Property()
+     * @SWG\Property(example="He For She")
      * @Type("string")
      */
     private $company;
@@ -75,7 +75,7 @@ class ContactDto
      *
      * @var string The URL of the website of the contact.
      *
-     * @SWG\Property()
+     * @SWG\Property(example="http://www.heforshe.org")
      * @Type("string")
      */
     private $website;
@@ -85,7 +85,7 @@ class ContactDto
      *
      * @var string The note made by the user, for the contact.
      *
-     * @SWG\Property()
+     * @SWG\Property(example="Sample note")
      * @Type("string")
      */
     private $note;
