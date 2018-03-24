@@ -3,7 +3,7 @@
 namespace ContactBundle\Exception;
 
 
-use JMS\Serializer\Serializer;
+use JMS\Serializer\SerializerInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ConstraintViolationException extends HttpException
@@ -20,7 +20,7 @@ class ConstraintViolationException extends HttpException
         parent::__construct(422, $message, $previous, [], $code);
     }
 
-    public static function fromConstraintViolationErrorList(array $constraintViolationList, Serializer $serializer)
+    public static function fromConstraintViolationErrorList(array $constraintViolationList, SerializerInterface $serializer)
     {
         $json = $serializer->serialize($constraintViolationList, 'json');
         return new ConstraintViolationException($json);

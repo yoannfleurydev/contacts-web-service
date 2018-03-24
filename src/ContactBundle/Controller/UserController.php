@@ -4,15 +4,16 @@ namespace ContactBundle\Controller;
 
 use ContactBundle\Assembler\UserAssembler;
 use ContactBundle\DTO\Error\ConstraintViolationErrorDto;
+use ContactBundle\DTO\UserDto;
 use ContactBundle\Exception\ConstraintViolationException;
 use ContactBundle\HttpFoundation\JsonResponse;
 use ContactBundle\Service\UserService;
+use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Swagger\Annotations as SWG;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -22,32 +23,27 @@ class UserController extends Controller
     /**
      * The serializer to transform DTO to JSON.
      *
-     * @var \JMS\Serializer\Serializer
+     * @var SerializerInterface
      */
     private $_serializer;
 
     /**
-     * Override of the setContainer method from the Controller class.
-     *
-     * @param ContainerInterface $container The already existing container will
-     *                                      be injected in the parameter.
-     *
-     * @return void
+     * ContactController constructor.
+     * @param SerializerInterface $serializer
      */
-    public function setContainer(ContainerInterface $container = null)
+    public function __construct(SerializerInterface $serializer)
     {
-        parent::setContainer($container);
-        $this->_serializer = $this->get('jms_serializer');
+        $this->_serializer = $serializer;
     }
 
     /**
      * Route to add user. Send JSON with the correct data to add
      * a \ContactBundle\Entity\User.
      *
-     * @Route("/users")
+     * @Route("/register")
      * @Method({"POST"})
      * @SWG\Post(
-     *     path="/users",
+     *     path="/register",
      *     tags={"users"},
      *     produces={"application/json"},
      *     @SWG\Parameter(
@@ -77,9 +73,11 @@ class UserController extends Controller
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function addAction(Request $request, UserService $userService, UserAssembler $userAssembler, ValidatorInterface $validator)
+    public function registerAction(Request $request, UserService $userService, UserAssembler $userAssembler, ValidatorInterface $validator)
     {
         $json = $request->getContent();
+
+        /** @var UserDto $userDto */
         $userDto = $this->_serializer->deserialize(
             $json,
             'ContactBundle\DTO\UserDto',

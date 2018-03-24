@@ -31,7 +31,7 @@ security:
                 require_previous_session: false
 
         api:
-            pattern:   ^/(?!users|_profiler)
+            pattern:   ^/(?!register|_profiler)
             stateless: true
             guard:
                 authenticators:
