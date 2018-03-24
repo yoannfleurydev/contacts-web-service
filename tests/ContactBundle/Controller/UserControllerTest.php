@@ -12,8 +12,8 @@ class UserControllerTest extends WebTestCase
 
         $unique = uniqid();
 
-        $crawler = $client->request(
-            'POST', '/users', [], [], [],
+        $client->request(
+            'POST', '/register', [], [], [],
             "{\"username\": \"$unique\", \"password\": \"$unique\"}"
         );
 
