@@ -12,8 +12,8 @@ security:
                 class: ContactBundle\Entity\User
 
     firewalls:
-        doc:
-            pattern: ^/doc
+        refresh:
+            pattern:  ^/login/refresh
             stateless: true
             anonymous: true
 
@@ -30,6 +30,11 @@ security:
                 failure_handler:          lexik_jwt_authentication.handler.authentication_failure
                 require_previous_session: false
 
+        doc:
+            pattern: ^/doc
+            stateless: true
+            anonymous: true
+
         api:
             pattern:   ^/(?!register|_profiler)
             stateless: true
@@ -38,6 +43,7 @@ security:
                     - lexik_jwt_authentication.jwt_token_authenticator
 
     access_control:
-        - { path: ^/doc,     roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/login,   roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/,        roles: IS_AUTHENTICATED_FULLY       }
+        - { path: ^/login,         roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/doc,           roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/,              roles: IS_AUTHENTICATED_FULLY       }

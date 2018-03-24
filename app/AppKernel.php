@@ -1,7 +1,7 @@
 <?php
 
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * AppKernel is like the main class in Symfony.
@@ -31,6 +31,7 @@ class AppKernel extends Kernel
             new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
             new Nelmio\CorsBundle\NelmioCorsBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
+            new Gesdinet\JWTRefreshTokenBundle\GesdinetJWTRefreshTokenBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
