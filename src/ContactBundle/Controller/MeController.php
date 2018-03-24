@@ -8,11 +8,11 @@ use ContactBundle\Service\UserService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Swagger\Annotations as SWG;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Swagger\Annotations as SWG;
 
 class MeController extends Controller
 {
@@ -41,10 +41,10 @@ class MeController extends Controller
      * Route to set the avatar of the user. Send multipart request with
      * the file as field.
      *
-     * @Route("/me/images")
+     * @Route("/users/me/images")
      * @Method({"POST"})
      * @SWG\Post(
-     *     path="/me/images",
+     *     path="/users/me/images",
      *     tags={"users"},
      *     produces={"application/json"},
      *     @SWG\Parameter(
@@ -97,10 +97,10 @@ class MeController extends Controller
      * Route to set the avatar of the user. Send multipart request with
      * the file as field.
      *
-     * @Route("/me")
+     * @Route("/users/me")
      * @Method({"GET"})
      * @SWG\Get(
-     *     path="/me",
+     *     path="/users/me",
      *     tags={"users"},
      *     produces={"application/json"},
      *     @SWG\Response(

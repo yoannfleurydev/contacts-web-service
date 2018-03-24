@@ -14,18 +14,21 @@
 namespace ContactBundle\Controller;
 
 use ContactBundle\Assembler\ContactAssembler;
+use ContactBundle\Assembler\PhoneAssembler;
+use ContactBundle\DTO\ContactDto;
+use ContactBundle\DTO\PhoneDto;
 use ContactBundle\Entity\Contact;
 use ContactBundle\Exception\ContactUnprocessableEntityHttpException;
 use ContactBundle\Exception\PhoneUnprocessableEntityHttpException;
 use ContactBundle\HttpFoundation\JsonResponse;
 use ContactBundle\Service\ContactService;
 use ContactBundle\Service\PhoneService;
+use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Swagger\Annotations as SWG;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -45,22 +48,17 @@ class ContactController extends Controller
     /**
      * The serializer to transform DTO to JSON.
      *
-     * @var \JMS\Serializer\Serializer
+     * @var \JMS\Serializer\SerializerInterface
      */
     private $_serializer;
 
     /**
-     * Override of the setContainer method from the Controller class.
-     *
-     * @param ContainerInterface $container The already existing container will
-     *                                      be injected in the parameter.
-     *
-     * @return void
+     * ContactController constructor.
+     * @param SerializerInterface $serializer
      */
-    public function setContainer(ContainerInterface $container = null)
+    public function __construct(SerializerInterface $serializer)
     {
-        parent::setContainer($container);
-        $this->_serializer = $this->get('jms_serializer');
+        $this->_serializer = $serializer;
     }
 
     /**
@@ -181,6 +179,7 @@ class ContactController extends Controller
             throw new ContactUnprocessableEntityHttpException();
         }
 
+        /** @var ContactDto $contactDto */
         $contactDto = $this->_serializer->deserialize(
             $json, 'ContactBundle\DTO\ContactDto', 'json'
         );
@@ -268,12 +267,13 @@ class ContactController extends Controller
      * @param ContactService $contactService The contact service injection
      * @param PhoneService $phoneService The phone service injection
      *
+     * @param PhoneAssembler $phoneAssembler The phone assembler to transform the dto to an entity
      * @return Response The response with a 201 CREATED if everything is
      *                      good or an error instead.
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function addPhoneAction(Request $request, $id, ContactService $contactService, PhoneService $phoneService)
+    public function addPhoneAction(Request $request, $id, ContactService $contactService, PhoneService $phoneService, PhoneAssembler $phoneAssembler)
     {
         $json = $request->getContent();
 
@@ -281,11 +281,15 @@ class ContactController extends Controller
             throw new PhoneUnprocessableEntityHttpException();
         }
 
+        /** @var PhoneDto $phoneDto */
         $phoneDto = $this->_serializer->deserialize(
             $json, 'ContactBundle\DTO\PhoneDto', 'json'
         );
 
-        $phoneService->createPhone($phoneDto, $id);
+        $phoneService->createPhone(
+            $phoneAssembler->dtoToEntity($phoneDto),
+            $id
+        );
         $contactDto = $contactService->get($id);
 
         return JsonResponse::CREATED(
