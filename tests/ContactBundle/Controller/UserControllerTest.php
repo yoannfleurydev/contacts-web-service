@@ -19,4 +19,18 @@ class UserControllerTest extends WebTestCase
 
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
+
+    public function testConstraintViolation()
+    {
+        $client = static::createClient();
+
+        $unique = uniqid();
+
+        $client->request(
+            'POST', '/register', [], [], [],
+            "{\"username\": \"\", \"password\": \"$unique\"}"
+        );
+
+        $this->assertTrue($client->getResponse()->isClientError());
+    }
 }

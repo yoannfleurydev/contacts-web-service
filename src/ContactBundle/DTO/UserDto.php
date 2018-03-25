@@ -25,11 +25,6 @@ class UserDto
     private $id;
 
     /**
-     * @Type("string")
-     */
-    private $identifier;
-
-    /**
      * The username of the user.
      * @var string
      *
@@ -77,18 +72,6 @@ class UserDto
     public function getId()
     {
         return $this->id;
-    }
-
-    public function setIdentifier($identifier): UserDto
-    {
-        $this->identifier = $identifier;
-
-        return $this;
-    }
-
-    public function getIdentifier()
-    {
-        return $this->identifier;
     }
 
     public function setUsername($username): UserDto
