@@ -109,8 +109,7 @@ class UserService
 
     public function get($id): User
     {
-        $user = $this->_userRepository->findOneById($id);
-        return $user;
+        return $this->_userRepository->findOneById($id);
     }
 
     /**
