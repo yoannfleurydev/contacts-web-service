@@ -82,14 +82,4 @@ class UserTest extends TestCase
         $this->assertEquals("username", $user->getUsername());
         $this->assertEquals("password", $user->getPassword());
     }
-
-    public function testEraseCredentials()
-    {
-        $user = new User();
-        $user->setPassword("password");
-
-        $user->eraseCredentials();
-
-        $this->assertEquals(null, $user->getPassword());
-    }
 }
