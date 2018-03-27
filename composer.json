@@ -1,7 +1,7 @@
 {
   "name": "Contacts",
   "description": "Simple Web Service to store contacts.",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "project",
   "autoload": {
     "psr-4": {
@@ -38,6 +38,7 @@
   },
   "require-dev": {
     "doctrine/doctrine-fixtures-bundle": "^2.4",
+    "phpunit/phpunit": "^6",
     "sensio/generator-bundle": "^3.0",
     "squizlabs/php_codesniffer": "*",
     "symfony/phpunit-bridge": "^3.0"
