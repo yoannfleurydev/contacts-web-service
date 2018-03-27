@@ -41,23 +41,4 @@ class UserServiceTest extends TestCase
         $this->assertEquals($userMock, $user);
     }
 
-    public function testSetBackground()
-    {
-
-    }
-
-    public function testCreateUser()
-    {
-
-    }
-
-    public function testDeleteUser()
-    {
-
-    }
-
-    public function testSetAvatar()
-    {
-
-    }
 }
