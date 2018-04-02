@@ -74,6 +74,7 @@ class UserService
      */
     private $_backgroundsDirectory;
 
+
     /**
      * Constructor of the contact service. It takes as parameters the logger
      * service and the entity manager of the application.
@@ -93,7 +94,8 @@ class UserService
         ValidatorInterface $validator,
         Serializer $serializer,
         $avatarsDirectory,
-        $backgroundsDirectory
+        $backgroundsDirectory,
+        $kernelProjectDir
     )
     {
         $this->_logger = $logger;
@@ -101,8 +103,8 @@ class UserService
         $this->_encoder = $encoder;
         $this->_validator = $validator;
         $this->_serializer = $serializer;
-        $this->_avatarsDirectory = $avatarsDirectory;
-        $this->_backgroundsDirectory = $backgroundsDirectory;
+        $this->_avatarsDirectory = $kernelProjectDir . DIRECTORY_SEPARATOR . $avatarsDirectory;
+        $this->_backgroundsDirectory = $kernelProjectDir . DIRECTORY_SEPARATOR . $backgroundsDirectory;
         $this->_userRepository = $this->_entityManager
             ->getRepository('ContactBundle:User');
     }
