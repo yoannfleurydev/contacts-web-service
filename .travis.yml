@@ -17,4 +17,4 @@ install:
 
 script:
   - composer install
-  - vendor/bin/simple-phpunit
+  - vendor/bin/phpunit --bootstrap vendor/autoload.php --configuration phpunit.xml.dist tests
