@@ -35,7 +35,8 @@ class UserServiceTest extends TestCase
 
         $userService = new UserService(
             $loggerMock, $entityManagerMock, $encoderMock, $validatorMock,
-            $serializerMock, "", "");
+            $serializerMock, "/web/public/uploads/avatars",
+            "/web/public/uploads/avatars", "");
         $user = $userService->get("id");
 
         $this->assertEquals($userMock, $user);
