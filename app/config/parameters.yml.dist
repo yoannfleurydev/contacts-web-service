@@ -23,6 +23,6 @@ parameters:
     jwt_key_pass_phrase:  ''                                         # ssh key pass phrase
     jwt_token_ttl:        3600
 
-    avatars_directory:     '%kernel.project_dir%/web/public/uploads/avatars'
-    backgrounds_directory: '%kernel.project_dir%/web/public/uploads/backgrounds'
+    avatars_directory:     '/web/public/uploads/avatars'
+    backgrounds_directory: '/web/public/uploads/backgrounds'
     sqlite_db_directory: "%kernel.project_dir%/var/sqlite.db"
